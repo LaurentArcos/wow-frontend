@@ -1,0 +1,40 @@
+name: Deploy to Surge
+
+on: 
+  push:
+    branches: 
+      - master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency: 
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  buildNdeploy:
+    environment: production
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: wow
+    steps:
+      # fetch du code
+      - name: Checkout
+        uses: actions/checkout@v3
+      # installation des dependances
+      - name: Install Dependencies
+        run: npm install
+      # build (attention avec Vite le dossier sera dist et non build - voir dans le choix du dossier dans la partie Deploy to surge)
+      - name: Build
+        run: npm run build
+      # deploy to surge / taper "surge list" dans le terminal pour voir tous les domaines que j'ai mis en ligne et "surge token" pour voir le token)
+      - name: Deploy to Surge
+        run: | # le "|" indique qu'il y a plusieurs commandes à éxécuter ici
+         npm install -g surge
+         surge ./dist --domain ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }} 
+         
