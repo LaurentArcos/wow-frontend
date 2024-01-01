@@ -1,0 +1,33 @@
+.achats-container {
+  .input-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    select, input {
+      margin-right: 10px;
+      padding: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+      background: rgb(24, 24, 24);
+    }
+  }
+}

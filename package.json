@@ -3,6 +3,6 @@
     "concurrently": "^8.2.2"
   },
   "scripts": {
-    "start": "concurrently \"npm run dev --prefix frontend\" \"npm start --prefix backend\""
+    "wow": "concurrently \"npm run dev --prefix frontend\" \"npm start --prefix backend\""
   }
 }

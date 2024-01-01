@@ -1,7 +1,23 @@
+@use 'reset';
+@use 'App';
+@use 'DataFormatter';
+@use 'itemsPrixTableau';
+@use 'CharacterPage';
+@use 'Achats';
+
+
+@font-face {
+  font-family: 'warcraft1';
+  src: local('warcraft1'), url(../assets/LifeCraft_Font.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'warcraft2';
+  src: local('warcraft2'), url(../assets/Warcraft.ttf) format('truetype');
+}
+
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
