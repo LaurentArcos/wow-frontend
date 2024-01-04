@@ -55,7 +55,7 @@ const ItemsPrixTableau = () => {
 
 
   return (
-    <div>
+    <div className='tableau'>
       <button onClick={fetchData}>Récupérer tableau</button>
 
       <table>

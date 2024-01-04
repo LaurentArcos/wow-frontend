@@ -7,7 +7,7 @@ const blizzardAPI = require('./blizzardAPI.js');
 
 app.use(express.json());
 const corsOptions = {
-    origin: 'http://localhost:5173', // or your specific vite dev server URL
+    origin: 'http://localhost:5173', 
     optionsSuccessStatus: 200
   };
   app.use(cors(corsOptions));
@@ -84,7 +84,6 @@ app.post('/ajouterAchat', (req, res) => {
   });
 });
 
-
 app.get('/api/character/appearance/:realm/:characterName', async (req, res) => {
 
   try {
@@ -102,6 +101,15 @@ app.get('/api/character/media/:realm/:characterName', async (req, res) => {
     try {
       const { realm, characterName } = req.params;
       const data = await blizzardAPI.getCharacterMedia(realm, characterName);
+      res.json(data);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+  app.get('/api/tokeninfo', async (req, res) => {
+    try {
+      const data = await blizzardAPI.getTokenInfo();
       res.json(data);
     } catch (error) {
       res.status(500).send(error.message);

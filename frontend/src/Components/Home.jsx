@@ -1,15 +1,65 @@
 import { Link } from 'react-router-dom';
-import reactLogo from '../../src/assets/react.svg';
-import viteLogo from '../../public/vite.svg';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
+  const [characterImages, setCharacterImages] = useState({});
+  const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
+
+  const itemNames = {
+    upload: 'inv_ammo_arrow_02',
+    tableau: 'inv_misc_coin_02',
+    achats: 'inv_misc_bag_07',
+    token: 'wow_token01'
+  };
+
+  useEffect(() => {
+    const fetchCharacterImage = async (realm, characterName) => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`);
+        return response.data.assets[0].value;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    };
+
+    const loadCharacterImages = async () => {
+      const characters = [
+        { realm: 'uldaman', name: 'thryndil' },
+        { realm: 'uldaman', name: 'olbia' },
+        { realm: 'uldaman', name: 'lukki' },
+      ];
+
+      const images = {};
+      for (const character of characters) {
+        images[character.name] = await fetchCharacterImage(character.realm, character.name);
+      }
+      setCharacterImages(images);
+    };
+
+    loadCharacterImages();
+  }, []);
+
   return (
     <div className="carousel">
-        <Link to="/upload"><img src={viteLogo} className="logo" alt="Vite logo" /></Link>
-        <Link to="/tableau"><img src={reactLogo} className="logo react" alt="React logo" /></Link>
-        <Link to="/achats"><img src={viteLogo} className="logo" alt="Vite logo" /></Link>
-        <Link to="/characterSample/realmName"><img src={reactLogo} className="logo react" alt="React logo" /></Link>
-        <Link to="/characterSample/realmName"><img src={viteLogo} className="logo" alt="Vite logo" /></Link>
+      <Link to="/upload">
+        <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo" alt="Upload" />
+      </Link>
+      <Link to="/tableau">
+        <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo" alt="Tableau" />
+      </Link>
+      <Link to="/achats">
+        <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo" alt="Achats" />
+      </Link>
+      <Link to="/token">
+        <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo" alt="Token" />
+      </Link>
+      {Object.entries(characterImages).map(([name, imageUrl]) => (
+        <Link key={name} to={`/uldaman/${name}`}>
+          <img src={imageUrl} className="logo" alt={`${name} character`} />
+        </Link>
+      ))}
     </div>
   );
 }

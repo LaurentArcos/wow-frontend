@@ -16,7 +16,7 @@ const CharacterPage = () => {
 
 const [profileData, setProfileData] = useState(null);
 const [mediaData, setMediaData] = useState(null);
-const { realm, characterName } = useParams(); // Obtenez les paramètres de l'URL
+const { realm, characterName } = useParams(); 
 
 useEffect(() => {
   axios.get(`http://localhost:8080/api/character/appearance/${realm}/${characterName}`)
@@ -26,7 +26,7 @@ useEffect(() => {
     axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`)
     .then(response => setMediaData(response.data))
     .catch(error => console.error(error));
-}, [realm, characterName]);
+}, [realm, characterName]); 
 
 
 return (

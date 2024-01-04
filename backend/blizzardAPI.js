@@ -33,7 +33,6 @@ const getCharacterAppearance = async (realm, characterName) => {
   try {
     const accessToken = await getAccessToken();
     const url = `${BLIZZARD_API_BASE_URL}/profile/wow/character/${realm}/${characterName}/appearance?namespace=profile-eu&locale=fr_FR&access_token=${accessToken}`;
-
     const response = await axios.get(url);
     return response.data;
   } catch (error) {
@@ -49,8 +48,21 @@ const getCharacterMedia = async (realm, characterName) => {
   return response.data;
 };
 
+const getTokenInfo = async () => {
+  try {
+    const accessToken = await getAccessToken();
+    const url = `${BLIZZARD_API_BASE_URL}/data/wow/token/index?namespace=dynamic-eu&locale=fr_FR&access_token=${accessToken}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching token information:", error.response || error);
+    throw error;
+  }
+};
+
 module.exports = {
   getAccessToken,
   getCharacterAppearance,
-  getCharacterMedia
+  getCharacterMedia,
+  getTokenInfo,
 };
