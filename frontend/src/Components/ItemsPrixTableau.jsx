@@ -12,10 +12,10 @@ const ItemsPrixTableau = () => {
     items.forEach(item => {
       dataMap.set(item.Id_Item, {
         nom: item.nom,
+        image: item.image, // Ajoutez cette ligne pour inclure l'URL de l'image
         prix: []
       });
     });
-  
     prix.forEach(prixEntry => {
       const itemData = dataMap.get(prixEntry.Id_Item);
       if (itemData) {
@@ -64,7 +64,10 @@ const ItemsPrixTableau = () => {
             const { min, max } = findExtremePrices(item.prix);
             return (
               <tr key={index}>
-                <td>{item.nom}</td>
+                                <td>
+                  <img src={item.image} alt={item.nom} style={{ width: '50px', height: '50px' }} />
+                  {item.nom}
+                </td>
                 {[...Array(maxPriceCount)].map((_, pIndex) => {
                   const prixInfo = item.prix[pIndex];
                   let className = '';
