@@ -16,3 +16,24 @@
 .logo {
   height: 10rem;
 }
+
+.loader {
+  transform: translateZ(1px);
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}
+
+@keyframes flipCoin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.loader {
+  animation: flipCoin 3s linear infinite;
+  transform-style: preserve-3d;
+}

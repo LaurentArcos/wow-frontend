@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import loader from "../assets/warcraft.png"
 
 const Home = () => {
   const [characterImages, setCharacterImages] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
 
   const itemNames = {
@@ -25,6 +27,7 @@ const Home = () => {
     };
 
     const loadCharacterImages = async () => {
+      setIsLoading(true); 
       const characters = [
         { realm: 'uldaman', name: 'thryndil' },
         { realm: 'uldaman', name: 'olbia' },
@@ -36,6 +39,7 @@ const Home = () => {
         images[character.name] = await fetchCharacterImage(character.realm, character.name);
       }
       setCharacterImages(images);
+      setIsLoading(false);
     };
 
     loadCharacterImages();
@@ -43,7 +47,11 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className='title'>World of Warcraft</h1>
+      {isLoading ? (
+        <img src={loader} alt="Loading..." className="loader" />
+        ) : (
+        <div>  
+        <h1 className='title'>World of Warcraft</h1>
         <div className="carousel">
           <Link to="/upload">
             <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo" alt="Upload" />
@@ -62,7 +70,8 @@ const Home = () => {
             <img src={imageUrl} className="logo" alt={`${name} character`} />
           </Link>
         ))}
-      </div>
+        </div></div>
+      )}
     </div>
   );
 }

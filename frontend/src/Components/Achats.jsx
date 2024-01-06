@@ -41,7 +41,7 @@ const Achats = () => {
               return {
                 ...achat,
                 nom: itemCorrespondant?.nom,
-                imageUrl: itemCorrespondant?.image, // Ajoutez l'URL de l'image ici
+                imageUrl: itemCorrespondant?.image, 
               };
             });
             setAchats(achatsAvecNomEtImage);
@@ -57,8 +57,8 @@ const Achats = () => {
       Id_Item: selectedItem,
       PrixUnitaire: prixUnitaire,
       Quantite: quantite,
-      DateAchat: new Date().toISOString().slice(0, 10), // Date du jour
-      nom: nomItem, // Ajout du nom du produit
+      DateAchat: new Date().toISOString().slice(0, 10), 
+      nom: nomItem,
     };
 
     axios

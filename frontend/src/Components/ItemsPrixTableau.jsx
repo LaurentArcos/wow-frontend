@@ -65,7 +65,7 @@ const ItemsPrixTableau = () => {
             return (
               <tr key={index}>
                 <td>
-                  <img src={item.image} alt={item.nom} />
+                  <img className='icone' src={item.image} alt={item.nom} />
                   {item.nom}
                 </td>
                 {[...Array(maxPriceCount)].map((_, pIndex) => {
