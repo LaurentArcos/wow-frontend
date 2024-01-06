@@ -9,14 +9,7 @@
   flex-direction: column;
 }
 
-.title {
-  color: white;
-  font-size: 6rem;
-  color: gold;
-  font-family: "warcraft2";
-  padding-top: 2rem;
-  text-align: center;
-}
+
 
 
 .character {
@@ -28,7 +21,6 @@
   font-size: 3rem;
   letter-spacing: 0.2rem;
   font-family: "warcraft1";
-  padding-top: 2rem;
 }
 
 .raceAndClass {
@@ -40,7 +32,7 @@
 
 .profilePicture {
   margin: auto;
-  height: 60vh;
-  width: 60vw;
+  height: 80vh;
+  width: 80vw;
 }
 

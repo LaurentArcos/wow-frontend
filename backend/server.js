@@ -84,6 +84,18 @@ app.post('/ajouterAchat', (req, res) => {
   });
 });
 
+
+app.post('/modifierAchatActive', (req, res) => {
+  const { id, active } = req.body;
+
+  db.query('UPDATE achats SET Active = ? WHERE Id = ?', [active, id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.send(`Achat avec ID: ${id} a été modifié avec succès.`);
+  });
+});
+
 app.get('/api/character/appearance/:realm/:characterName', async (req, res) => {
 
   try {

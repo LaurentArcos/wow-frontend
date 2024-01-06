@@ -34,7 +34,6 @@ return (
     <nav>
       <Link to="/">Accueil</Link>
     </nav>
-    <div className='title'>World of Warcraft</div>
     {profileData && (
       <div className='character'>
         <div className='name'>{profileData.character.name}</div>

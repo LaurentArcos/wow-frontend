@@ -64,8 +64,8 @@ const ItemsPrixTableau = () => {
             const { min, max } = findExtremePrices(item.prix);
             return (
               <tr key={index}>
-                                <td>
-                  <img src={item.image} alt={item.nom} style={{ width: '50px', height: '50px' }} />
+                <td>
+                  <img src={item.image} alt={item.nom} />
                   {item.nom}
                 </td>
                 {[...Array(maxPriceCount)].map((_, pIndex) => {

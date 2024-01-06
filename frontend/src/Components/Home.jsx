@@ -42,24 +42,27 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="carousel">
-      <Link to="/upload">
-        <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo" alt="Upload" />
-      </Link>
-      <Link to="/tableau">
-        <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo" alt="Tableau" />
-      </Link>
-      <Link to="/achats">
-        <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo" alt="Achats" />
-      </Link>
-      <Link to="/token">
-        <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo" alt="Token" />
-      </Link>
-      {Object.entries(characterImages).map(([name, imageUrl]) => (
-        <Link key={name} to={`/uldaman/${name}`}>
-          <img src={imageUrl} className="logo" alt={`${name} character`} />
-        </Link>
-      ))}
+    <div>
+      <h1 className='title'>World of Warcraft</h1>
+        <div className="carousel">
+          <Link to="/upload">
+            <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo" alt="Upload" />
+          </Link>
+          <Link to="/tableau">
+            <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo" alt="Tableau" />
+          </Link>
+          <Link to="/achats">
+            <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo" alt="Achats" />
+          </Link>
+          <Link to="/token">
+            <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo" alt="Token" />
+          </Link>
+        {Object.entries(characterImages).map(([name, imageUrl]) => (
+          <Link key={name} to={`/uldaman/${name}`}>
+            <img src={imageUrl} className="logo" alt={`${name} character`} />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

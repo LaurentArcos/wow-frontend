@@ -1,4 +1,18 @@
+.title {
+  font-size: 6rem;
+  color: gold;
+  font-family: "warcraft2";
+  text-align: center;
+  margin: 0 auto 5rem;
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+}
+
 .logo {
   height: 10rem;
 }
-
