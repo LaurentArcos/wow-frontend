@@ -15,7 +15,43 @@
 
 .logo {
   height: 10rem;
+  padding: 1.5rem;
+  will-change: filter;
+  transition: filter 300ms;
+  border-radius: 100%;
 }
+
+.logo-tableau:hover {
+  filter: drop-shadow(0 0 3rem #86208f);
+}
+
+.logo-upload:hover {
+  filter: drop-shadow(0 0 3rem #068fff);
+}
+
+.logo-achats:hover {
+  filter: drop-shadow(0 0 3rem #ff16a6);
+}
+
+.logo-token:hover {
+  filter: drop-shadow(0 0 3rem #2ea300);
+}
+
+.logo-thryndil:hover {
+  filter: drop-shadow(0 0 3rem #d6fc00);
+}
+
+.logo-olbia:hover {
+  filter: drop-shadow(0 0 3rem #ff0000);
+}
+
+.logo-lukki:hover {
+  filter: drop-shadow(0 0 3rem #a3a3a3);
+}
+
+
+
+
 
 .loader {
   transform: translateZ(1px);

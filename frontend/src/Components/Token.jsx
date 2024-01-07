@@ -17,6 +17,7 @@ const Token = () => {
     }, []);
 
     return (
+
         <div>
             <p>Prix du Token : {tokenData.price}</p>
             <p>Dernière mise à jour : {tokenData.lastUpdated}</p>

@@ -55,6 +55,7 @@ const ItemsPrixTableau = () => {
 
 
   return (
+
     <div className='tableau'>
       <button onClick={fetchData}>Récupérer tableau</button>
 

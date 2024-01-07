@@ -1,11 +1,11 @@
 @use 'reset';
 @use 'App';
-@use 'DataFormatter';
+@use 'Upload';
 @use 'itemsPrixTableau';
 @use 'CharacterPage';
 @use 'Achats';
 @use 'Home';
-
+@use 'IconBar';
 
 @font-face {
   font-family: 'warcraft1';

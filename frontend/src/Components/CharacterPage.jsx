@@ -1,4 +1,4 @@
-
+import IconBar from './IconBar';
 import axios from 'axios';
 import { useState, useEffect} from 'react'
 import { Link, useParams } from 'react-router-dom';
@@ -30,10 +30,8 @@ useEffect(() => {
 
 
 return (
+
   <div className='characterPage'>
-    <nav>
-      <Link to="/">Accueil</Link>
-    </nav>
     {profileData && (
       <div className='character'>
         <div className='name'>{profileData.character.name}</div>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Achats = () => {
   const [items, setItems] = useState([]);
@@ -74,8 +76,12 @@ const Achats = () => {
         setSelectedItem("");
         setPrixUnitaire("");
         setQuantite("");
+        toast.success(`Achat de ${nomItem} ajouté avec succès !`);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast.error("Erreur lors de l'ajout de l'achat.");
+      });
   };
 
   const desactiverAchat = (id) => {
@@ -184,6 +190,7 @@ const Achats = () => {
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 };

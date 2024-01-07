@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const DataFormatter = () => {
+const Upload = () => {
   const [inputData, setInputData] = useState('');
   const [formattedData, setFormattedData] = useState([]);
   const [isTransferEnabled, setIsTransferEnabled] = useState(false);
@@ -24,9 +26,11 @@ const DataFormatter = () => {
   const transferData = async () => {
     try {
       const response = await axios.post('/api/ajouterPrix', formattedData);
+      toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
       console.log(response.data);
     } catch (error) {
       console.error(error);
+      toast.error("Échec de l'upload.");
     }
   };
 
@@ -37,6 +41,7 @@ const DataFormatter = () => {
   };
 
   return (
+
     <div>
       <textarea value={inputData} onChange={handleInputChange} />
       <button onClick={formatData}>Formatter les données</button>
@@ -47,8 +52,9 @@ const DataFormatter = () => {
           <button onClick={() => deleteFormattedData(index)}>Supprimer</button>
         </div>
       ))}
+      <ToastContainer />
     </div>
   );
 };
 
-export default DataFormatter;
+export default Upload;

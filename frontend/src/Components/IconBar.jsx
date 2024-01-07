@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import loader from "../assets/warcraft.png"
 
-const Home = () => {
-  const [characterImages, setCharacterImages] = useState({});
+const IconBar = () => {
+const [characterImages, setCharacterImages] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
 
@@ -45,35 +44,34 @@ const Home = () => {
     loadCharacterImages();
   }, []);
 
+
   return (
     <div>
       {isLoading ? (
-        <img src={loader} alt="Loading..." className="loader" />
+        <p></p>
         ) : (
-        <div>  
-        <h1 className='title'>World of Warcraft</h1>
-        <div className="carousel">
-          <Link to="/upload">
-            <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo logo-upload" alt="Upload" />
-          </Link>
-          <Link to="/tableau">
-            <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo logo-tableau" alt="Tableau" />
-          </Link>
-          <Link to="/achats">
-            <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo logo-achats" alt="Achats" />
-          </Link>
-          <Link to="/token">
-            <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo logo-token" alt="Token" />
-          </Link>
-        {Object.entries(characterImages).map(([name, imageUrl]) => (
-          <Link key={name} to={`/uldaman/${name}`}>
-            <img src={imageUrl} className={`logo logo-${name}`} alt={`${name} character`} />
-          </Link>
-        ))}
-        </div></div>
+    <div className="icon-bar">
+      <Link to="/upload">
+        <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="iconbar-icon" alt="Upload" />
+      </Link>
+      <Link to="/tableau">
+        <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="iconbar-icon" alt="Tableau" />
+      </Link>
+      <Link to="/achats">
+        <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="iconbar-icon" alt="Achats" />
+      </Link>
+      <Link to="/token">
+        <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="iconbar-icon" alt="Token" />
+      </Link>
+      {Object.entries(characterImages).map(([name, imageUrl]) => (
+        <Link key={name} to={`/uldaman/${name}`}>
+          <img src={imageUrl} className="iconbar-icon" alt={`${name} character`} />
+        </Link>
+      ))}
+        </div>
       )}
     </div>
   );
 }
 
-export default Home;
+export default IconBar;
