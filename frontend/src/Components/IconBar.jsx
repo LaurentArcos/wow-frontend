@@ -11,7 +11,8 @@ const [characterImages, setCharacterImages] = useState({});
     upload: 'inv_ammo_arrow_02',
     tableau: 'inv_misc_coin_02',
     achats: 'inv_misc_bag_07',
-    token: 'wow_token01'
+    token: 'wow_token01',
+    home: 'inv_misc_tournaments_banner_human'
   };
 
   useEffect(() => {
@@ -51,6 +52,9 @@ const [characterImages, setCharacterImages] = useState({});
         <p></p>
         ) : (
     <div className="icon-bar">
+      <Link to="/">
+        <img src={`${baseIconUrl}/${itemNames.home}.jpg`} className="iconbar-icon" alt="Home" />
+      </Link>
       <Link to="/upload">
         <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="iconbar-icon" alt="Upload" />
       </Link>

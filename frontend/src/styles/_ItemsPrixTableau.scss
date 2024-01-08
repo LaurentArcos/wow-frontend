@@ -1,5 +1,16 @@
 .tableau {
+  margin: 5rem;
   font-size: 0.8rem;
+}
+
+.tableau table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableau td, .tableau th {
+  border: 1px solid grey;
+  padding: 0.5rem;
 }
 
 .icone {
