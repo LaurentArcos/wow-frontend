@@ -40,7 +40,7 @@ return (
     )}
     {mediaData && (
       <div 
-          className='profilePicture' 
+          className={`profilePicture-${profileData.character.name}`} 
           style={{ 
             backgroundImage: `url(${mediaData.assets[2].value})`,
             backgroundPosition: 'center',

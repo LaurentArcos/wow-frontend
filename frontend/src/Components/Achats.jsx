@@ -190,7 +190,9 @@ const Achats = () => {
           ))}
         </tbody>
       </table>
-      <ToastContainer />
+      <ToastContainer
+        theme="colored"
+      />
     </div>
   );
 };

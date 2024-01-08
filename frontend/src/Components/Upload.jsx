@@ -52,7 +52,9 @@ const Upload = () => {
           <button onClick={() => deleteFormattedData(index)}>Supprimer</button>
         </div>
       ))}
-      <ToastContainer />
+      <ToastContainer
+        theme="colored"
+      />
     </div>
   );
 };

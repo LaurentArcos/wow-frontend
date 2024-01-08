@@ -21,6 +21,7 @@
   font-size: 3rem;
   letter-spacing: 0.2rem;
   font-family: "warcraft1";
+  margin-top: 10rem;
 }
 
 .raceAndClass {
@@ -31,8 +32,23 @@
 }
 
 .profilePicture {
-  margin: auto;
-  height: 80vh;
-  width: 80vw;
+  &-Thryndil {
+    margin: 0rem auto;
+    height: 55vh;
+    width: 55vw;
+  }
+
+  &-Olbia {
+    height: 65vh;
+    width: 65vw;
+    margin: -5rem auto;
+  }
+
+  &-Lukki {
+    height: 50vh;
+    width: 50vw;
+    margin: 2rem auto;
+  }
+
 }
 

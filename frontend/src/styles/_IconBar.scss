@@ -6,10 +6,32 @@
 
 .icon-bar {
   position: absolute;
+  background-color: #2424249c;
+  border-radius: 50px;
   top: 0%;
+  left: calc(38%);
   margin: 1rem auto;
 }
 
 .iconbar-icon:hover {
   box-shadow: 0px 0px 30px #ffffff ;
+} 
+
+
+//* MEDIA QUERIES
+
+
+@media only screen and (max-width: 500px) {
+
+  .icon-bar {
+    left: 0%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .iconbar-icon {
+    height: 2.6rem;
+    margin: 0 0.5rem;
+  }
+
 }
