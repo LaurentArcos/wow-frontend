@@ -4,7 +4,7 @@ import axios from 'axios';
 const ItemsPrixTableau = () => {
   const [organizedData, setOrganizedData] = useState([]);
 
-  const organizeDataForTable = (items, prix) => {
+  const organizeDataForTable = (items, prix, achats) => {
     const dataMap = new Map();
     
     items.forEach(item => {
@@ -29,7 +29,16 @@ const ItemsPrixTableau = () => {
       const moyenne = prixItem.length ? prixItem.reduce((acc, val) => acc + parseFloat(val.Prix), 0) / prixItem.length : 0;
       const median = prixItem.length ? calculateMedian(prixItem.map(p => parseFloat(p.Prix))) : 0;
       const dixDerniers = prixItem.slice(-10).map(p => ({ prix: p.Prix, date: new Date(p.Date).toLocaleDateString('fr-FR', { month: 'short', day: 'numeric' }) }));
-  
+      const estActif = achats.some(achat => achat.Id_Item === item.Id_Item && achat.Active === 1);
+      
+      const prixTries = prix
+          .filter(p => p.Id_Item === item.Id_Item)
+          .map(p => parseFloat(p.Prix))
+          .sort((a, b) => b - a);
+    
+      const cinqPlusElevés = new Set(prixTries.slice(0, 5));
+      const cinqPlusBas = new Set(prixTries.slice(-5));
+
       dataMap.set(item.Id_Item, {
         nom: item.nom,
         image: item.image,
@@ -39,7 +48,10 @@ const ItemsPrixTableau = () => {
         maxDate,
         moyenne,
         median,
-        dixDerniers
+        dixDerniers,
+        estActif,
+        cinqPlusElevés,
+        cinqPlusBas
       });
     });
   
@@ -57,7 +69,8 @@ const ItemsPrixTableau = () => {
     try {
       const resItems = await axios.get('/api/items');
       const resPrix = await axios.get('/api/prix');
-      setOrganizedData(organizeDataForTable(resItems.data, resPrix.data));
+      const resAchats = await axios.get('/api/achats');
+      setOrganizedData(organizeDataForTable(resItems.data, resPrix.data, resAchats.data));
     } catch (error) {
       console.error("Erreur lors de la récupération des données", error);
     }
@@ -83,7 +96,7 @@ const ItemsPrixTableau = () => {
   <tbody>
   {organizedData.map((item, index) => (
     <tr key={index}>
-      <td>
+      <td className={item.estActif ? "nom-produit-actif" : ''}>
         <img className='icone' src={item.image} alt={item.nom} />
         {item.nom}
       </td>
@@ -100,20 +113,25 @@ const ItemsPrixTableau = () => {
       <td>{item.moyenne.toFixed(2)}</td>
       <td>{item.median.toFixed(2)}</td>
       {item.dixDerniers.map((dernier, pIndex) => {
-        let className = '';
-        if (parseFloat(dernier.prix) === item.min) {
-          className = 'prix-minimum';
-        } else if (parseFloat(dernier.prix) === item.max) {
-          className = 'prix-maximum';
-        }
-        return (
-          <td key={pIndex} className={className}>
-            {dernier.prix}
-            <br/>
-            <i style={{ fontSize: "smaller" }}>({dernier.date})</i>
-          </td>
-        );
-      })}
+  let className = '';
+  const prix = parseFloat(dernier.prix);
+  if (prix === item.min) {
+    className = 'prix-minimum';
+  } else if (prix === item.max) {
+    className = 'prix-maximum';
+  } else if (item.cinqPlusElevés.has(prix)) {
+    className = 'prix-eleve';
+  } else if (item.cinqPlusBas.has(prix)) {
+    className = 'prix-bas';
+  }
+  return (
+    <td key={pIndex} className={className}>
+      {dernier.prix}
+      <br/>
+      <i style={{ fontSize: "smaller" }}>({dernier.date})</i>
+    </td>
+  );
+})}
     </tr>
   ))}
 </tbody>

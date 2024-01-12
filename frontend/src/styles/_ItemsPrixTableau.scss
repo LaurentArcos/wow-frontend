@@ -21,17 +21,28 @@ td {
   padding: 0.5rem;
 }
 
+.nom-produit-actif {
+  color: gold;
+}
+
 .prix {
   font-weight: bold;
 }
 
 .prix-maximum {
-  background-color: red;
+  background-color: #ff0000; 
   color: white;
 }
 
 .prix-minimum {
-  background-color: green;
+  background-color: #008000; 
   color: white;
 }
 
+.prix-eleve {
+  background-color: #df7272; 
+}
+
+.prix-bas {
+  background-color: #6caf6c; 
+}
