@@ -1,6 +1,7 @@
 .tableau {
   margin: 5rem;
   font-size: 0.8rem;
+  font-weight: bold;
 }
 
 .tableau table {
@@ -25,18 +26,28 @@ td {
   color: gold;
 }
 
-.prix {
-  font-weight: bold;
+.prix-max {
+  color: #ff0000; 
+}
+
+.prix-min {
+  color: #008000; 
+}
+
+.moyenne {
+ color: rgb(255, 128, 25);
+}
+
+.median {
+  color: rgb(169, 169, 255);
 }
 
 .prix-maximum {
   background-color: #ff0000; 
-  color: white;
 }
 
 .prix-minimum {
   background-color: #008000; 
-  color: white;
 }
 
 .prix-eleve {

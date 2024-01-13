@@ -100,18 +100,18 @@ const ItemsPrixTableau = () => {
         <img className='icone' src={item.image} alt={item.nom} />
         {item.nom}
       </td>
-      <td>
+      <td className='prix-min'>
         {item.min}
         <br/>
         <i style={{ fontSize: "smaller" }}>({item.minDate})</i>
       </td>
-      <td>
+      <td className='prix-max'>
         {item.max}
         <br/>
         <i style={{ fontSize: "smaller" }}>({item.maxDate})</i>
       </td>
-      <td>{item.moyenne.toFixed(2)}</td>
-      <td>{item.median.toFixed(2)}</td>
+      <td className='moyenne'>{item.moyenne.toFixed(2)}</td>
+      <td className='median'>{item.median.toFixed(2)}</td>
       {item.dixDerniers.map((dernier, pIndex) => {
   let className = '';
   const prix = parseFloat(dernier.prix);
