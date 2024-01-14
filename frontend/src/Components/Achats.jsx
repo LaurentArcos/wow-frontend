@@ -9,6 +9,7 @@ const Achats = () => {
   const [prixUnitaire, setPrixUnitaire] = useState("");
   const [quantite, setQuantite] = useState("");
   const [achats, setAchats] = useState([]);
+  
 
   const totalParProduit = achats
     .filter((achat) => achat.Active === 1)
@@ -26,7 +27,7 @@ const Achats = () => {
     totalQuantite: totalParProduit[nom].totalQuantite,
     totalValeur: totalParProduit[nom].totalValeur,
   }));
-
+  const totalGlobal = totalParProduitArray.reduce((acc, produit) => acc + produit.totalValeur, 0);
   useEffect(() => {
     axios
       .get("/api/items")
@@ -181,20 +182,22 @@ const Achats = () => {
           </tr>
         </thead>
         <tbody>
-          {totalParProduitArray.map((produit, index) => (
-            <tr key={index}>
-              <td>{produit.nom}</td>
-              <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
-              <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <ToastContainer
-        theme="colored"
-      />
-    </div>
-  );
+        {totalParProduitArray.map((produit, index) => (
+          <tr key={index}>
+            <td>{produit.nom}</td>
+            <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
+            <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
+          </tr>
+        ))}
+        <tr>
+          <td colSpan="2">Total Global</td>
+          <td>{totalGlobal.toLocaleString("fr-FR")}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ToastContainer theme="colored" />
+  </div>
+);
 };
 
 export default Achats;
