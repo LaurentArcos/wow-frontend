@@ -12,11 +12,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/upload" element={<Layout><Upload /></Layout>} />
-        <Route path="/tableau" element={<Layout><ItemsPrixTableau /></Layout>} />
-        <Route path="/achats" element={<Layout><Achats /></Layout>} />
-        <Route path="/token" element={<Layout><Token /></Layout>} />
-        <Route path="/:realm/:characterName" element={<Layout><CharacterPage /></Layout>} />
+        <Route path="/upload" element={<Layout><Upload/></Layout>} />
+        <Route path="/tableau" element={<Layout><ItemsPrixTableau/></Layout>} />
+        <Route path="/achats" element={<Layout><Achats/></Layout>} />
+        <Route path="/token" element={<Layout><Token/></Layout>} />
+        <Route path="/:realm/:characterName" element={<Layout><CharacterPage/></Layout>} />
       </Routes>
     </Router>
   );
