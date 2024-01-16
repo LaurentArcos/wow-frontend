@@ -87,7 +87,7 @@ const Achats = () => {
 
   const desactiverAchat = (id) => {
     axios
-      .post("/api/modifierAchatActive", { id, active: 0 })
+      .post("/api/modifierAchatActive", { id })
       .then(() => {
         setAchats(
           achats.map((achat) => {
@@ -97,8 +97,12 @@ const Achats = () => {
             return achat;
           })
         );
+        toast.success("Achat marqué comme revendu.");
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast.error("Erreur lors de la mise à jour de l'achat.");
+      });
   };
 
   return (
@@ -166,7 +170,7 @@ const Achats = () => {
                 <td>
                   <button onClick={() => desactiverAchat(achat.Id)}>
                     Revendu !
-                  </button>
+                  </button >
                 </td>
               </tr>
             ))}
