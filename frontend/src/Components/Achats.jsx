@@ -183,6 +183,7 @@ const Achats = () => {
             <th>Nom du Produit</th>
             <th>Total Quantité</th>
             <th>Total Valeur</th>
+            <th>Prix Unitaire Moyen</th>
           </tr>
         </thead>
         <tbody>
@@ -191,6 +192,7 @@ const Achats = () => {
             <td>{produit.nom}</td>
             <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
             <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
+            <td>{(produit.totalValeur/produit.totalQuantite).toFixed(2)}</td>
           </tr>
         ))}
         <tr>
