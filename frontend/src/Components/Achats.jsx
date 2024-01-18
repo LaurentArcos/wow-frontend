@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Achats = () => {
   const [items, setItems] = useState([]);
@@ -9,7 +9,6 @@ const Achats = () => {
   const [prixUnitaire, setPrixUnitaire] = useState("");
   const [quantite, setQuantite] = useState("");
   const [achats, setAchats] = useState([]);
-  
 
   const totalParProduit = achats
     .filter((achat) => achat.Active === 1)
@@ -27,7 +26,10 @@ const Achats = () => {
     totalQuantite: totalParProduit[nom].totalQuantite,
     totalValeur: totalParProduit[nom].totalValeur,
   }));
-  const totalGlobal = totalParProduitArray.reduce((acc, produit) => acc + produit.totalValeur, 0);
+  const totalGlobal = totalParProduitArray.reduce(
+    (acc, produit) => acc + produit.totalValeur,
+    0
+  );
   useEffect(() => {
     axios
       .get("/api/items")
@@ -44,7 +46,7 @@ const Achats = () => {
               return {
                 ...achat,
                 nom: itemCorrespondant?.nom,
-                imageUrl: itemCorrespondant?.image, 
+                imageUrl: itemCorrespondant?.image,
               };
             });
             setAchats(achatsAvecNomEtImage);
@@ -60,7 +62,7 @@ const Achats = () => {
       Id_Item: selectedItem,
       PrixUnitaire: prixUnitaire,
       Quantite: quantite,
-      DateAchat: new Date().toISOString().slice(0, 10), 
+      DateAchat: new Date().toISOString().slice(0, 10),
       nom: nomItem,
     };
 
@@ -170,7 +172,7 @@ const Achats = () => {
                 <td>
                   <button onClick={() => desactiverAchat(achat.Id)}>
                     Revendu !
-                  </button >
+                  </button>
                 </td>
               </tr>
             ))}
@@ -187,23 +189,25 @@ const Achats = () => {
           </tr>
         </thead>
         <tbody>
-        {totalParProduitArray.map((produit, index) => (
-          <tr key={index}>
-            <td>{produit.nom}</td>
-            <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
-            <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
-            <td>{(produit.totalValeur/produit.totalQuantite).toFixed(2)}</td>
+          {totalParProduitArray.map((produit, index) => (
+            <tr key={index}>
+              <td>{produit.nom}</td>
+              <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
+              <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
+              <td>
+                {(produit.totalValeur / produit.totalQuantite).toFixed(2)}
+              </td>
+            </tr>
+          ))}
+          <tr>
+            <td colSpan="2">Total Global</td>
+            <td>{totalGlobal.toLocaleString("fr-FR")}</td>
           </tr>
-        ))}
-        <tr>
-          <td colSpan="2">Total Global</td>
-          <td>{totalGlobal.toLocaleString("fr-FR")}</td>
-        </tr>
-      </tbody>
-    </table>
-    <ToastContainer theme="colored" />
-  </div>
-);
+        </tbody>
+      </table>
+      <ToastContainer theme="colored" />
+    </div>
+  );
 };
 
 export default Achats;
