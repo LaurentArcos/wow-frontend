@@ -42,7 +42,7 @@ const Upload = () => {
 
   return (
 
-    <div>
+    <div className='Upload'>
       <textarea value={inputData} onChange={handleInputChange} />
       <button onClick={formatData}>Formatter les données</button>
       <button onClick={transferData} disabled={!isTransferEnabled}>Transférer dans la base de données</button>
