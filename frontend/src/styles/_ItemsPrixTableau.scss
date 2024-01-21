@@ -27,19 +27,23 @@ td {
 }
 
 .prix-max {
-  color: #ff0000; 
+  background-color: #ff0000; 
+  color: white;
 }
 
 .prix-min {
-  color: #008000; 
+  background-color: #008000; 
+  color: white;
 }
 
 .moyenne {
- color: rgb(255, 128, 25);
+ background-color: rgb(255, 255, 69);
+ color: black;
 }
 
 .median {
-  color: rgb(169, 169, 255);
+  background-color: rgb(25, 132, 255);
+  color: black;
 }
 
 .prix-maximum {
@@ -52,8 +56,22 @@ td {
 
 .prix-eleve {
   background-color: #df7272; 
+  color: black;
 }
 
+
 .prix-bas {
-  background-color: #6caf6c; 
+  background-color: #6caf6c;
+  color: black;
+} 
+
+
+.prix-six-au-dix-eleve {
+  background-color: #fcb6b6;
+  color: black;
+}
+
+.prix-six-au-dix-faible {
+  background-color: #b6fcb6;
+  color: black;
 }
