@@ -62,35 +62,45 @@ const Upload = () => {
 
   return (
     <div className='Upload'>
-
-      <textarea value={inputData} onChange={handleInputChange} />
-      <button onClick={formatData}>Formatter les données</button>
-      <button onClick={transferData} disabled={!isTransferEnabled}>Transférer dans la base de données</button>
-      {formattedData.map((item, index) => (
-        <div key={index}>
-          {item.name} : {item.price}
-          <button onClick={() => deleteFormattedData(index)}>Supprimer</button>
-        </div>
-      ))}
-
-      <div>
-        <input
-          type="text"
-          value={newItemName}
-          onChange={(e) => setNewItemName(e.target.value)}
-          placeholder="Nom du nouvel item"
-        />
-        <input
-          type="text"
-          value={newItemImagePart}
-          onChange={(e) => setNewItemImagePart(e.target.value)}
-          placeholder="Partie de l'URL de l'image"
-        />
-        <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
-      </div>
-
-      <ToastContainer theme="colored" />
       
+      <div className="upload-wrapper">
+  
+        
+        <div className="upload-prices">
+          <textarea value={inputData} onChange={handleInputChange} />
+          <button onClick={formatData}>Formatter les données</button>
+          <button onClick={transferData} disabled={!isTransferEnabled}>Transférer dans la base de données</button>
+          {formattedData.map((item, index) => (
+            <div key={index}>
+              {item.name} : {item.price}
+              <button onClick={() => deleteFormattedData(index)}>Supprimer</button>
+            </div>
+          ))}
+        </div>
+  
+        
+        <div className="separator"></div>
+  
+        
+        <div className="upload-new-item">
+          <input
+            type="text"
+            value={newItemName}
+            onChange={(e) => setNewItemName(e.target.value)}
+            placeholder="Nom du nouvel item"
+          />
+          <input
+            type="text"
+            value={newItemImagePart}
+            onChange={(e) => setNewItemImagePart(e.target.value)}
+            placeholder="Partie de l'URL de l'image"
+          />
+          <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
+        </div>
+  
+      </div>
+  
+      <ToastContainer theme="colored" />
     </div>
   );
 };
