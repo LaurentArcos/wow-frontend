@@ -128,6 +128,17 @@ app.get('/api/character/media/:realm/:characterName', async (req, res) => {
     }
   });
 
+  app.post('/ajouterItem', (req, res) => {
+    const { nom, image } = req.body;
+  
+    db.query('INSERT INTO Items (nom, image) VALUES (?, ?)', [nom, image], (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.send(`Nouvel item ajouté avec succès: ${nom}`);
+    });
+  });
+
 
 const PORT = process.env.PORT || 8080;
 
