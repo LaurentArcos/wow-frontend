@@ -73,7 +73,7 @@ const Upload = () => {
           {formattedData.map((item, index) => (
             <div key={index}>
               {item.name} : {item.price}
-              <button onClick={() => deleteFormattedData(index)}>Supprimer</button>
+              <button className='delete-button' onClick={() => deleteFormattedData(index)}>Supprimer</button>
             </div>
           ))}
         </div>
