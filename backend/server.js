@@ -87,12 +87,15 @@ app.post('/ajouterAchat', (req, res) => {
 
 app.post('/modifierAchatActive', (req, res) => {
   const { id, active } = req.body;
+  if (id == null) { 
+    return res.status(400).json({ error: "L'ID de l'achat est manquant." });
+  }
 
-  db.query('UPDATE achats SET Active = ? WHERE Id = ?', [active, id], (err, results) => {
+  db.query('UPDATE achats SET Active = ? WHERE Id_Achat = ?', [active, id], (err, results) => {
       if (err) {
           return res.status(500).json({ error: err.message });
       }
-      res.send(`Achat avec ID: ${id} a été modifié avec succès.`);
+      res.send(`Achat avec ID_Achat: ${id} a été modifié avec succès.`);
   });
 });
 

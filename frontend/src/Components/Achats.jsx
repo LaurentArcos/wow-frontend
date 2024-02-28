@@ -87,25 +87,33 @@ const Achats = () => {
       });
   };
 
-  const desactiverAchat = (id) => {
-    axios
-      .post("/api/modifierAchatActive", { id })
+
+  const desactiverAchat = (idAchat) => {
+    const achatToDisable = achats.find(achat => achat.Id_Achat === idAchat);
+    if (!achatToDisable) {
+      toast.error("Erreur : Achat non trouvé.");
+      return;
+    }
+  
+    axios.post("/api/modifierAchatActive", { id: idAchat, active: 0 })
       .then(() => {
-        setAchats(
-          achats.map((achat) => {
-            if (achat.Id === id) {
-              return { ...achat, Active: 0 };
-            }
-            return achat;
-          })
-        );
-        toast.success("Achat marqué comme revendu.");
+        setAchats(achats.map(achat => {
+          if (achat.Id_Achat === idAchat) {
+            return { ...achat, Active: 0 };
+          }
+          return achat;
+        }));
+  
+        // Trouver le nom de l'item correspondant dans le state `items`
+        const itemName = items.find(item => item.Id_Item === achatToDisable.Id_Item)?.nom;
+        toast.success(`achat "${idAchat}" de "${itemName}"  marqué comme revendu.`);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Erreur lors de la mise à jour de l'achat:", error);
         toast.error("Erreur lors de la mise à jour de l'achat.");
       });
   };
+
 
   return (
     <div className="achats-container">
@@ -170,9 +178,7 @@ const Achats = () => {
                   })}
                 </td>
                 <td>
-                  <button onClick={() => desactiverAchat(achat.Id)}>
-                    Revendu !
-                  </button>
+                <button onClick={() => desactiverAchat(achat.Id_Achat)}>Revendu !</button>
                 </td>
               </tr>
             ))}
