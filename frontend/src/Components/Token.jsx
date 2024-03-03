@@ -7,7 +7,7 @@ const Token = () => {
     useEffect(() => {
         axios.get('http://localhost:8080/api/tokeninfo')
             .then(response => {
-                const priceFormatted = (response.data.price / 10000000).toLocaleString('fr-FR');
+                const priceFormatted = (response.data.price / 10000000).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 const dateUpdated = new Date(response.data.last_updated_timestamp).toLocaleString('fr-FR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                 setTokenData({price: priceFormatted, lastUpdated: dateUpdated});
             })
@@ -19,8 +19,8 @@ const Token = () => {
     return (
 
         <div>
-            <p>Prix du Token : {tokenData.price}</p>
-            <p>Dernière mise à jour : {tokenData.lastUpdated}</p>
+            <p className='token'>{tokenData.price}</p>
+            <p className='token-date'>Dernière mise à jour : {tokenData.lastUpdated}</p>
         </div>
     );
 }

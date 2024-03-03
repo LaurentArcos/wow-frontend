@@ -3,7 +3,7 @@ const express = require('express');
 const db = require('../database');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/prix', (req, res) => {
     db.query('SELECT * FROM Prix', (err, results) => {
         if (err) {
             return res.status(500).json({ error: err.message });

@@ -4,7 +4,7 @@ const db = require('../database'); // Assurez-vous que le chemin est correct
 const router = express.Router();
 
 // Définissez vos routes pour les achats ici
-router.get('/', async (req, res) => {
+router.get('/achats', async (req, res) => {
   db.query('SELECT * FROM achats', (err, results) => {
     if (err) {
         return res.status(500).json({ error: err.message });

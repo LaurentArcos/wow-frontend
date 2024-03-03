@@ -13,9 +13,9 @@ app.use(cors({ origin: 'http://localhost:5173', optionsSuccessStatus: 200 }));
 
 // Utiliser les routes
 app.use('/api', blizzardAPIRoutes);
-app.use('/api/items', itemsRoutes);
-app.use('/api/prix', prixRoutes);
-app.use('/api/achats', achatsRoutes);
+app.use('/api', itemsRoutes);
+app.use('/api', prixRoutes);
+app.use('/api', achatsRoutes);
 
 
 app.use((err, req, res, next) => {
