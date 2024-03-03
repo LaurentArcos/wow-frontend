@@ -60,10 +60,13 @@ const ItemsPrixTableau = () => {
         .map((p) => parseFloat(p.Prix))
         .sort((a, b) => b - a);
 
-      const cinqPlusElevés = new Set(prixTries.slice(0, 5));
+      const cinqPlusEleves = new Set(prixTries.slice(0, 5));
       const cinqPlusBas = new Set(prixTries.slice(-5));
-      const sixAuDixPlusElevés = new Set(prixTries.slice(5, 10));
+      const sixAuDixPlusEleves = new Set(prixTries.slice(5, 10));
       const sixAuDixPlusFaibles = new Set(prixTries.slice(-10, -5));
+      const onzeAuVingtPlusEleves = new Set(prixTries.slice(20, 10));
+      const onzeAuVingtPlusFaibles = new Set(prixTries.slice(-20, -10));
+
 
       dataMap.set(item.Id_Item, {
         nom: item.nom,
@@ -76,10 +79,12 @@ const ItemsPrixTableau = () => {
         median,
         dixDerniers,
         estActif,
-        cinqPlusElevés,
+        cinqPlusEleves,
         cinqPlusBas,
-        sixAuDixPlusElevés,
+        sixAuDixPlusEleves,
         sixAuDixPlusFaibles,
+        onzeAuVingtPlusEleves,
+        onzeAuVingtPlusFaibles,
       });
     });
 
@@ -149,15 +154,19 @@ const ItemsPrixTableau = () => {
                   className = "prix-minimum";
                 } else if (prix === item.max) {
                   className = "prix-maximum";
-                } else if (item.cinqPlusElevés.has(prix)) {
+                } else if (item.cinqPlusEleves.has(prix)) {
                   className = "prix-eleve";
                 } else if (item.cinqPlusBas.has(prix)) {
                   className = "prix-bas";
-                } else if (item.sixAuDixPlusElevés.has(prix)) {
+                } else if (item.sixAuDixPlusEleves.has(prix)) {
                   className = "prix-six-au-dix-eleve";
                 } else if (item.sixAuDixPlusFaibles.has(prix)) {
                   className = "prix-six-au-dix-faible";
-                }
+                } else if (item.onzeAuVingtPlusEleves.has(prix)) {
+                  className = "prix-onze-au-vingt-eleve";
+                } else if (item.onzeAuVingtPlusFaibles.has(prix)) {
+                  className = "prix-onze-au-vingt-faible";
+                } 
                 return (
                   <td key={pIndex} className={className}>
                     {dernier.prix}

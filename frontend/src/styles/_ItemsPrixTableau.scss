@@ -27,7 +27,7 @@ td {
 }
 
 .prix-max {
-  background-color: #ff0000; 
+  background-color: #8f0000; 
   color: white;
 }
 
@@ -47,7 +47,7 @@ td {
 }
 
 .prix-maximum {
-  background-color: #ff0000; 
+  background-color: #8f0000; 
 }
 
 .prix-minimum {
@@ -55,23 +55,33 @@ td {
 }
 
 .prix-eleve {
-  background-color: #df7272; 
-  color: black;
+  background-color: #d10000; 
 }
 
 
 .prix-bas {
-  background-color: #6caf6c;
+  background-color: #00c900;
   color: black;
 } 
 
 
 .prix-six-au-dix-eleve {
-  background-color: #fcb6b6;
+  background-color: #ff6d6d;
   color: black;
 }
 
 .prix-six-au-dix-faible {
-  background-color: #b6fcb6;
+  background-color: #22ff22;
   color: black;
 }
+
+.prix-onze-au-vingt-eleve {
+  background-color: #fda8a8;
+  color: black;
+}
+
+.prix-onze-au-vingt-faible {
+  background-color: #8dff8d;
+  color: black;
+}
+
