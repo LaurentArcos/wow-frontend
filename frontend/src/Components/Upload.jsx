@@ -27,7 +27,7 @@ const Upload = () => {
 
   const transferData = async () => {
     try {
-      const response = await axios.post('/api/ajouterPrix', formattedData);
+      const response = await axios.post('http://localhost:8080//api/ajouterPrix', formattedData);
       toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
       console.log(response.data);
     } catch (error) {
@@ -39,7 +39,7 @@ const Upload = () => {
   const handleAddNewItem = async () => {
     try {
       const fullImageUrl = `https://render.worldofwarcraft.com/eu/icons/56/${newItemImagePart}.jpg`;
-      const response = await axios.post('/api/ajouterItem', {
+      const response = await axios.post('http://localhost:8080//api/ajouterItem', {
         nom: newItemName,
         image: fullImageUrl
       });

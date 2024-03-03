@@ -102,9 +102,9 @@ const ItemsPrixTableau = () => {
 
   const fetchData = async () => {
     try {
-      const resItems = await axios.get("/api/items");
-      const resPrix = await axios.get("/api/prix");
-      const resAchats = await axios.get("/api/achats");
+      const resItems = await axios.get("http://localhost:8080/api/items");
+      const resPrix = await axios.get("http://localhost:8080/api/prix");
+      const resAchats = await axios.get("http://localhost:8080/api/achats");
       setOrganizedData(
         organizeDataForTable(resItems.data, resPrix.data, resAchats.data)
       );
