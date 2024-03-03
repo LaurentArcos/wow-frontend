@@ -1,36 +1,44 @@
 import axios from 'axios';
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-
-
 const CharacterPage = () => {
+  const [profileData, setProfileData] = useState(null);
+  const [mediaData, setMediaData] = useState(null);
+  const { realm, characterName } = useParams(); 
+  const [backgroundImage, setBackgroundImage] = useState('TavernBackground.jpg');
 
-  
+  useEffect(() => {
+    changeBackground('TavernBackground.jpg'); // Définit l'image de fond initiale à l'image par défaut
 
-// const [profileName, setProfileName ] =useState([]);
-// const [race, setRace ] =useState([]);
-// const [characterClass, setCharacterClass ] =useState([]);
-// const [profilePicture, setProfilePicture] =useState([]);
+    Promise.all([
+      axios.get(`http://localhost:8080/api/character/appearance/${realm}/${characterName}`),
+      axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`)
+    ]).then(([profileResponse, mediaResponse]) => {
+      setProfileData(profileResponse.data);
+      setMediaData(mediaResponse.data);
+    }).catch(error => console.error(error));
+  }, [realm, characterName]);
 
-const [profileData, setProfileData] = useState(null);
-const [mediaData, setMediaData] = useState(null);
-const { realm, characterName } = useParams(); 
+  const backgrounds = [
+    'TavernBackground.jpg',
+    'chantorage1.jpg',
+    'chantorage2.jpg',
+    'chantorage3.jpg',
+    'chantorage4.jpg',
+  ];
 
-useEffect(() => {
-  axios.get(`http://localhost:8080/api/character/appearance/${realm}/${characterName}`)
-    .then(response => setProfileData(response.data))
-    .catch(error => console.error(error));
-
-    axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`)
-    .then(response => setMediaData(response.data))
-    .catch(error => console.error(error));
-}, [realm, characterName]); 
-
+  const changeBackground = (initialBackground) => {
+    const randomBackground = initialBackground || backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    setBackgroundImage(`../../public/backgroundImages/${randomBackground}`);
+  };
 
 return (
 
-  <div className='characterPage'>
+  <div className='characterPage' style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <button onClick={() => changeBackground()} className="change-background-btn">
+        Modifier background
+      </button>
     {profileData && (
       <div className='character'>
         <div className='name'>{profileData.character.name}</div>

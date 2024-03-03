@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import loader from "../assets/warcraft.png"
+import loader from "../../public/warcraft.png"
 
 const Home = () => {
   const [characterImages, setCharacterImages] = useState({});
