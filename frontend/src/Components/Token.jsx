@@ -18,8 +18,8 @@ const Token = () => {
 
     return (
 
-        <div>
-            <p className='token'>{tokenData.price}</p>
+        <div className='token'>
+            <p className='token-price'>{tokenData.price}</p>
             <p className='token-date'>Dernière mise à jour : {tokenData.lastUpdated}</p>
         </div>
     );
