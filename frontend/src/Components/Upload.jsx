@@ -27,7 +27,7 @@ const Upload = () => {
 
   const transferData = async () => {
     try {
-      const response = await axios.post('${import.meta.env.API_URL}/ajouterPrix', formattedData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/ajouterPrix`, formattedData);
       toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
       console.log(response.data);
     } catch (error) {
