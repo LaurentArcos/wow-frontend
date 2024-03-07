@@ -27,7 +27,7 @@ const Upload = () => {
 
   const transferData = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/ajouterPrix', formattedData);
+      const response = await axios.post('${import.meta.env.API_URL}/ajouterPrix', formattedData);
       toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
       console.log(response.data);
     } catch (error) {
@@ -39,7 +39,7 @@ const Upload = () => {
   const handleAddNewItem = async () => {
     try {
       const fullImageUrl = `https://render.worldofwarcraft.com/eu/icons/56/${newItemImagePart}.jpg`;
-      const response = await axios.post('http://localhost:8080/api/ajouterItem', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/ajouterItem`, {
         nom: newItemName,
         image: fullImageUrl
       });
@@ -62,12 +62,32 @@ const Upload = () => {
 
   return (
     <div className='Upload'>
+  
+        
+  <div className="upload-new-item">
+  <div className="input-group"> 
+    <input
+      type="text"
+      value={newItemName}
+      onChange={(e) => setNewItemName(e.target.value)}
+      placeholder="Nom du nouvel item"
+    />
+    <input
+      type="text"
+      value={newItemImagePart}
+      onChange={(e) => setNewItemImagePart(e.target.value)}
+      placeholder="Partie de l'URL de l'image"
+    />
+    <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
+  </div>
+</div>
       
-      <div className="upload-wrapper">
+   
   
         
         <div className="upload-prices">
-          <textarea value={inputData} onChange={handleInputChange} />
+          <textarea value={inputData} onChange={handleInputChange} placeholder="Import depuis Auctionator" />
+         <div className='upload-prices-buttons'> 
           <button onClick={formatData}>Formatter les données</button>
           <button onClick={transferData} disabled={!isTransferEnabled}>Transférer dans la base de données</button>
           {formattedData.map((item, index) => (
@@ -75,30 +95,10 @@ const Upload = () => {
               {item.name} : {item.price}
               <button className='delete-button' onClick={() => deleteFormattedData(index)}>Supprimer</button>
             </div>
-          ))}
+          ))}</div>
         </div>
   
-        
-        <div className="separator"></div>
   
-        
-        <div className="upload-new-item">
-          <input
-            type="text"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-            placeholder="Nom du nouvel item"
-          />
-          <input
-            type="text"
-            value={newItemImagePart}
-            onChange={(e) => setNewItemImagePart(e.target.value)}
-            placeholder="Partie de l'URL de l'image"
-          />
-          <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
-        </div>
-  
-      </div>
   
       <ToastContainer theme="colored" />
     </div>

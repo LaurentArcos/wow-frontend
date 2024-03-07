@@ -1,4 +1,3 @@
-// routes/prix.js
 const express = require('express');
 const db = require('../database');
 const router = express.Router();
@@ -18,7 +17,6 @@ router.post('/ajouterPrix', (req, res) => {
   prixData.forEach(data => {
       const { name, price } = data;
 
-      // Récupérer l'id correspondant au nom de l'item
       db.query('SELECT Id_Item FROM Items WHERE nom = ?', [name], (err, results) => {
           if (err) {
               return res.status(500).json({ error: err.message });
@@ -28,7 +26,6 @@ router.post('/ajouterPrix', (req, res) => {
               const itemId = results[0].Id_Item;
               const today = new Date().toISOString().slice(0, 10);
 
-              // Insérer le prix dans la table Prix
               db.query('INSERT INTO Prix (Id_Item, Date, Prix) VALUES (?, ?, ?)', [itemId, today, price], (err, results) => {
                   if (err) {
                       return res.status(500).json({ error: err.message });

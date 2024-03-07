@@ -1,19 +1,13 @@
-.token {
-  background-color: rgb(34, 34, 34);
-  padding: 100px;
-  border: 1px solid gold;
-  border-radius: 10px;
-}
-
 .token-price {
   font-family: "warcraft1";
-  font-size: 5rem;
+  color: goldenrod;
+  font-size: 10rem;
   letter-spacing: 10px;
   margin-bottom: 20px;
 }
 
 .token-date {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-style: italic;
   text-align: center;
 }

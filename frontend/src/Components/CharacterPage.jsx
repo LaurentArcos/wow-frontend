@@ -9,11 +9,11 @@ const CharacterPage = () => {
   const [backgroundImage, setBackgroundImage] = useState('TavernBackground.jpg');
 
   useEffect(() => {
-    changeBackground('TavernBackground.jpg'); // Définit l'image de fond initiale à l'image par défaut
+    changeBackground('TavernBackground.jpg');
 
     Promise.all([
-      axios.get(`http://localhost:8080/api/character/appearance/${realm}/${characterName}`),
-      axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`)
+      axios.get(`${import.meta.env.VITE_API_URL}/character/appearance/${realm}/${characterName}`),
+      axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`)
     ]).then(([profileResponse, mediaResponse]) => {
       setProfileData(profileResponse.data);
       setMediaData(mediaResponse.data);

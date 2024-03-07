@@ -1,7 +1,22 @@
 .tableau {
   margin: 5rem;
   font-size: 0.8rem;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+th {
+  font-size: 1.1rem;
+}
+
+.tableau button {
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+.tableau button:hover {
+border: 1px solid goldenrod ;
 }
 
 .tableau table {
@@ -20,6 +35,7 @@
 
 td {
   padding: 0.5rem;
+  font-weight: bold;
 }
 
 .nom-produit-actif {

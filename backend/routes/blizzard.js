@@ -1,4 +1,3 @@
-// routes/blizzard.js
 const express = require('express');
 const blizzardAPI = require('../blizzardAPI');
 const router = express.Router();

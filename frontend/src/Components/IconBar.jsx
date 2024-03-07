@@ -18,7 +18,7 @@ const [characterImages, setCharacterImages] = useState({});
   useEffect(() => {
     const fetchCharacterImage = async (realm, characterName) => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/character/media/${realm}/${characterName}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`);
         return response.data.assets[0].value;
       } catch (error) {
         console.error(error);

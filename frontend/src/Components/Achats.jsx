@@ -32,12 +32,12 @@ const Achats = () => {
   );
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/items")
+      .get(`${import.meta.env.VITE_API_URL}/items`)
       .then((response) => {
         setItems(response.data);
 
         axios
-          .get("http://localhost:8080/api/achats")
+          .get(`${import.meta.env.VITE_API_URL}/achats`)
           .then((achatsResponse) => {
             const achatsAvecNomEtImage = achatsResponse.data.map((achat) => {
               const itemCorrespondant = response.data.find(
@@ -67,7 +67,7 @@ const Achats = () => {
     };
 
     axios
-      .post("http://localhost:8080/api/ajouterAchat", achatData)
+      .post(`${import.meta.env.VITE_API_URL}/ajouterAchat`, achatData)
       .then(() => {
         setAchats([
           ...achats,
@@ -95,7 +95,7 @@ const Achats = () => {
       return;
     }
   
-    axios.post("http://localhost:8080/api/modifierAchatActive", { id: idAchat, active: 0 })
+    axios.post(`${import.meta.env.VITE_API_URL}/modifierAchatActive`, { id: idAchat, active: 0 })
       .then(() => {
         setAchats(achats.map(achat => {
           if (achat.Id_Achat === idAchat) {
