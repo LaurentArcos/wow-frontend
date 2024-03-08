@@ -1,5 +1,5 @@
 .Upload {
-
+  margin-top: 50px;
   width: 1000px;
 
   .upload-new-item {
@@ -9,6 +9,10 @@
 
   .input-group input {
     width: 50%;
+  }
+
+  .upload-prices {
+    margin: 10px auto;
   }
 
   .upload-prices-buttons {
