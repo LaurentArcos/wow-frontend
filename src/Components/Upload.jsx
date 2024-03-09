@@ -9,6 +9,7 @@ const Upload = () => {
   const [isTransferEnabled, setIsTransferEnabled] = useState(false);
   const [newItemName, setNewItemName] = useState('');
   const [newItemImagePart, setNewItemImagePart] = useState('');
+  const [showNewItemSection, setShowNewItemSection] = useState(true); 
 
   const handleInputChange = (e) => {
     setInputData(e.target.value);
@@ -23,13 +24,15 @@ const Upload = () => {
     });
     setFormattedData(formatted);
     setIsTransferEnabled(true);
+    setShowNewItemSection(false); 
   };
 
   const transferData = async () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/ajouterPrix`, formattedData);
       toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
-      console.log(response.data);
+      setShowNewItemSection(true);
+      console.log(response);
     } catch (error) {
       console.error(error);
       toast.error("Échec de l'upload.");
@@ -63,7 +66,7 @@ const Upload = () => {
   return (
     <div className='Upload'>
   
-        
+  {showNewItemSection && (      
   <div className="upload-new-item">
   <div className="input-group"> 
     <input
@@ -81,7 +84,7 @@ const Upload = () => {
     <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
   </div>
 </div>
-      
+       )}
    
   
         
