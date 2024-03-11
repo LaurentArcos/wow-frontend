@@ -13,7 +13,7 @@ const Home = () => {
     tableau: 'inv_misc_coin_02',
     achats: 'inv_misc_bag_07',
     token: 'wow_token01'
-  };
+  }; 
 
   useEffect(() => {
     const fetchCharacterImage = async (realm, characterName) => {
