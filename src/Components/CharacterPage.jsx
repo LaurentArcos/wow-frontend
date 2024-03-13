@@ -2,35 +2,59 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import TavernBackground from '../assets/backgroundImages/TavernBackground.jpg';
+import Chantorage1 from '../assets/backgroundImages/chantorage1.jpg';
+import Chantorage2 from '../assets/backgroundImages/chantorage2.jpg';
+import Chantorage3 from '../assets/backgroundImages/chantorage3.jpg';
+import Chantorage4 from '../assets/backgroundImages/chantorage4.jpg';
+
 const CharacterPage = () => {
+  const { realm, characterName } = useParams(); 
   const [profileData, setProfileData] = useState(null);
   const [mediaData, setMediaData] = useState(null);
-  const { realm, characterName } = useParams(); 
-  const [backgroundImage, setBackgroundImage] = useState('TavernBackground.jpg');
+  const [achievementsSummaryData, setAchievementsSummaryData] = useState(null);
+  const [achievementsStatisticsData, setAchievementsStatisticsData] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(TavernBackground);
 
   useEffect(() => {
-    changeBackground('TavernBackground.jpg');
-
+    
     Promise.all([
       axios.get(`${import.meta.env.VITE_API_URL}/character/appearance/${realm}/${characterName}`),
-      axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`)
-    ]).then(([profileResponse, mediaResponse]) => {
+      axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`),
+      axios.get(`${import.meta.env.VITE_API_URL}/character/achievements/summary/${realm}/${characterName}`),
+      axios.get(`${import.meta.env.VITE_API_URL}/character/achievements/statistics/${realm}/${characterName}`)
+    ]).then(([profileResponse, mediaResponse, achievementsSummaryResponse, achievementsStatisticsResponse ]) => {
       setProfileData(profileResponse.data);
       setMediaData(mediaResponse.data);
+      setAchievementsSummaryData(achievementsSummaryResponse.data);
+      setAchievementsStatisticsData(achievementsStatisticsResponse.data);
+      console.log(achievementsSummaryResponse.data);
+      console.log(achievementsStatisticsResponse.data);
     }).catch(error => console.error(error));
   }, [realm, characterName]);
 
   const backgrounds = [
-    'TavernBackground.jpg',
-    'chantorage1.jpg',
-    'chantorage2.jpg',
-    'chantorage3.jpg',
-    'chantorage4.jpg',
+    TavernBackground,
+    Chantorage1,
+    Chantorage2,
+    Chantorage3,
+    Chantorage4,
   ];
 
-  const changeBackground = (initialBackground) => {
-    const randomBackground = initialBackground || backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    setBackgroundImage(`../../public/backgroundImages/${randomBackground}`);
+  const changeBackground = () => {
+
+    if (backgroundImage === TavernBackground) {
+      const randomIndex = Math.floor(Math.random() * backgrounds.length);
+      setBackgroundImage(backgrounds[randomIndex]);
+    } else {
+      
+      const allBackgrounds = [TavernBackground, ...backgrounds];
+      let newBackground;
+      do {
+        newBackground = allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
+      } while (newBackground === backgroundImage); 
+      setBackgroundImage(newBackground);
+    }
   };
 
 return (

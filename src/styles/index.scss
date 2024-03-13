@@ -10,12 +10,12 @@
 
 @font-face {
   font-family: 'warcraft1';
-  src: local('warcraft1'), url(../../public/LifeCraft_Font.ttf) format('truetype');
+  src: local('warcraft1'), url(../assets/LifeCraft_Font.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'warcraft2';
-  src: local('warcraft2'), url(../../public/Warcraft.ttf) format('truetype');
+  src: local('warcraft2'), url(../assets/Warcraft.ttf) format('truetype');
 }
 
 
@@ -70,4 +70,25 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.loader {
+  transform: translateZ(1px);
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}
+
+@keyframes flipCoin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.loader {
+  animation: flipCoin 3s linear infinite;
+  transform-style: preserve-3d;
 }

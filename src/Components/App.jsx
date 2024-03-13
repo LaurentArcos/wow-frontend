@@ -7,7 +7,9 @@ import Home from './Home';
 import Token from './Token';
 import Layout from './Layout';
 
-function App() {
+
+const App = () => {
+
   return (
     <Router>
       <Routes>
