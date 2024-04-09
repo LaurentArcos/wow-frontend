@@ -7,6 +7,7 @@ import Chantorage1 from '../assets/backgroundImages/chantorage1.jpg';
 import Chantorage2 from '../assets/backgroundImages/chantorage2.jpg';
 import Chantorage3 from '../assets/backgroundImages/chantorage3.jpg';
 import Chantorage4 from '../assets/backgroundImages/chantorage4.jpg';
+import stormwind from '../assets/backgroundImages/stormwind.jpg';
 
 const CharacterPage = () => {
   const { realm, characterName } = useParams(); 
@@ -39,6 +40,7 @@ const CharacterPage = () => {
     Chantorage2,
     Chantorage3,
     Chantorage4,
+    stormwind,
   ];
 
   const changeBackground = () => {
