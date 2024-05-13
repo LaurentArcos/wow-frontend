@@ -8,7 +8,7 @@ import Chantorage2 from '../assets/backgroundImages/chantorage2.jpg';
 import Chantorage3 from '../assets/backgroundImages/chantorage3.jpg';
 import Chantorage4 from '../assets/backgroundImages/chantorage4.jpg';
 import Stormwind from '../assets/backgroundImages/stormwind.jpg';
-import NagrandBC from '../assets/backgroundImages/NagrandBC.jpg';
+import NagrandBC from '../assets/backgroundImages/nagrandBC.jpg';
 
 const CharacterPage = () => {
   const { realm, characterName } = useParams(); 
