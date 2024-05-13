@@ -21,8 +21,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          node-version: '20.x' # Spécifiez la version Node ici, si disponible dans les options de l'action
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
