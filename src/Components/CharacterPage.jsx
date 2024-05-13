@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import TavernBackground from '../assets/backgroundImages/tavernBackground.jpg';
+import TavernBackground from '../assets/backgroundImages/TavernBackground.jpg';
 import Chantorage1 from '../assets/backgroundImages/chantorage1.jpg';
 import Chantorage2 from '../assets/backgroundImages/chantorage2.jpg';
 import Chantorage3 from '../assets/backgroundImages/chantorage3.jpg';
