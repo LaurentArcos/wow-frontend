@@ -33,6 +33,7 @@ const Home = () => {
         { realm: 'uldaman', name: 'olbia' },
         { realm: 'uldaman', name: 'lukki' },
         { realm: 'uldaman', name: 'sharubu' },
+        { realm: 'uldaman', name: 'falak' },
       ];
 
       const images = {};

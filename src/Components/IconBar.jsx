@@ -33,6 +33,7 @@ const [characterImages, setCharacterImages] = useState({});
         { realm: 'uldaman', name: 'olbia' },
         { realm: 'uldaman', name: 'lukki' },
         { realm: 'uldaman', name: 'sharubu' },
+        { realm: 'uldaman', name: 'falak' },
       ];
 
       const images = {};

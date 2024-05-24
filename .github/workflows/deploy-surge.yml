@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 #changé en V4 pour le passage des github actions de node 16 à node 20 (anciennement checkout@v3)
       - name: Install Dependencies
         run: npm install
       - name: Build Project
