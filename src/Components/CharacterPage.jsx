@@ -18,6 +18,11 @@ const CharacterPage = () => {
   const [achievementsStatisticsData, setAchievementsStatisticsData] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(TavernBackground);
 
+  console.log(profileData);
+  console.log(mediaData);
+  console.log(achievementsSummaryData);
+  console.log(achievementsStatisticsData);
+
   useEffect(() => {
     
     Promise.all([
@@ -71,6 +76,7 @@ return (
       <div className='character'>
         <div className='name'>{profileData.character.name}</div>
         <div className='raceAndClass'>{profileData.playable_race.name} / {profileData.playable_class.name}</div>
+        <div>level {profileData.character.level}</div>
       </div>
     )}
     {mediaData && (

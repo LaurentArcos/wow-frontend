@@ -69,8 +69,8 @@ const [characterImages, setCharacterImages] = useState({});
       <Link to="/token">
         <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="iconbar-icon" alt="Token" />
       </Link>
-      {Object.entries(characterImages).map(([name, imageUrl]) => (
-        <Link key={name} to={`/uldaman/${name}`}>
+      {Object.entries(characterImages).map(([name, imageUrl, realm]) => (
+        <Link key={name} to={`/${realm}/${name}`}>
           <img src={imageUrl} className="iconbar-icon" alt={`${name} character`} />
         </Link>
       ))}
