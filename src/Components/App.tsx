@@ -8,7 +8,7 @@ import Token from './Token';
 import Layout from './Layout';
 
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <Router>
@@ -23,6 +23,5 @@ const App = () => {
     </Router>
   );
 }
-
 
 export default App;

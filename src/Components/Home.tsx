@@ -1,14 +1,31 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import loader from "../assets/warcraft.png"
+import loader from "../assets/warcraft.png";
 
-const Home = () => {
-  const [characterImages, setCharacterImages] = useState({});
+// Define types for character images and item names
+interface CharacterImageMap {
+  [key: string]: string | null;
+}
+
+interface Character {
+  realm: string;
+  name: string;
+}
+
+interface ItemNames {
+  upload: string;
+  tableau: string;
+  achats: string;
+  token: string;
+}
+
+const Home: React.FC = () => {
+  const [characterImages, setCharacterImages] = useState<CharacterImageMap>({});
   const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
 
-  const itemNames = {
+  const itemNames: ItemNames = {
     upload: 'inv_ammo_arrow_02',
     tableau: 'inv_misc_coin_02',
     achats: 'inv_misc_bag_07',
@@ -16,7 +33,7 @@ const Home = () => {
   }; 
 
   useEffect(() => {
-    const fetchCharacterImage = async (realm, characterName) => {
+    const fetchCharacterImage = async (realm: string, characterName: string) => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`);
         return response.data.assets[0].value;
@@ -28,7 +45,7 @@ const Home = () => {
 
     const loadCharacterImages = async () => {
       setIsLoading(true); 
-      const characters = [
+      const characters: Character[] = [
         { realm: 'uldaman', name: 'thryndil' },
         { realm: 'uldaman', name: 'olbia' },
         { realm: 'uldaman', name: 'lukki' },
@@ -36,7 +53,7 @@ const Home = () => {
         { realm: 'uldaman', name: 'falak' },
       ];
 
-      const images = {};
+      const images: CharacterImageMap = {};
       for (const character of characters) {
         images[character.name] = await fetchCharacterImage(character.realm, character.name);
       }
@@ -69,7 +86,7 @@ const Home = () => {
           </Link>
         {Object.entries(characterImages).map(([name, imageUrl]) => (
           <Link key={name} to={`/uldaman/${name}`}>
-            <img src={imageUrl} className={`logo logo-${name}`} alt={`${name} character`} />
+            <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
           </Link>
         ))}
         </div></div>

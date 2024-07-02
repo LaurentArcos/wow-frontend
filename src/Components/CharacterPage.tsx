@@ -10,12 +10,40 @@ import Chantorage4 from '../assets/backgroundImages/chantorage4.jpg';
 import Stormwind from '../assets/backgroundImages/stormwind.jpg';
 import NagrandBC from '../assets/backgroundImages/nagrandBC.jpg';
 
-const CharacterPage = () => {
-  const { realm, characterName } = useParams(); 
-  const [profileData, setProfileData] = useState(null);
-  const [mediaData, setMediaData] = useState(null);
-  const [achievementsSummaryData, setAchievementsSummaryData] = useState(null);
-  const [achievementsStatisticsData, setAchievementsStatisticsData] = useState(null);
+// Define types for the data structures
+interface Character {
+  name: string;
+  level: number;
+}
+
+interface PlayableRace {
+  name: string;
+}
+
+interface PlayableClass {
+  name: string;
+}
+
+interface ProfileData {
+  character: Character;
+  playable_race: PlayableRace;
+  playable_class: PlayableClass;
+}
+
+interface MediaData {
+  assets: { value: string }[];
+}
+
+interface AchievementsData {
+  // pour plus tard
+}
+
+const CharacterPage: React.FC = () => {
+  const { realm, characterName } = useParams<{ realm: string; characterName: string }>();
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [mediaData, setMediaData] = useState<MediaData | null>(null);
+  const [achievementsSummaryData, setAchievementsSummaryData] = useState<AchievementsData | null>(null);
+  const [achievementsStatisticsData, setAchievementsStatisticsData] = useState<AchievementsData | null>(null);
   const [backgroundImage, setBackgroundImage] = useState(TavernBackground);
 
   console.log(profileData);
@@ -24,13 +52,12 @@ const CharacterPage = () => {
   console.log(achievementsStatisticsData);
 
   useEffect(() => {
-    
     Promise.all([
       axios.get(`${import.meta.env.VITE_API_URL}/character/appearance/${realm}/${characterName}`),
       axios.get(`${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`),
       axios.get(`${import.meta.env.VITE_API_URL}/character/achievements/summary/${realm}/${characterName}`),
       axios.get(`${import.meta.env.VITE_API_URL}/character/achievements/statistics/${realm}/${characterName}`)
-    ]).then(([profileResponse, mediaResponse, achievementsSummaryResponse, achievementsStatisticsResponse ]) => {
+    ]).then(([profileResponse, mediaResponse, achievementsSummaryResponse, achievementsStatisticsResponse]) => {
       setProfileData(profileResponse.data);
       setMediaData(mediaResponse.data);
       setAchievementsSummaryData(achievementsSummaryResponse.data);
@@ -51,47 +78,44 @@ const CharacterPage = () => {
   ];
 
   const changeBackground = () => {
-
     if (backgroundImage === TavernBackground) {
       const randomIndex = Math.floor(Math.random() * backgrounds.length);
       setBackgroundImage(backgrounds[randomIndex]);
     } else {
-      
       const allBackgrounds = [TavernBackground, ...backgrounds];
       let newBackground;
       do {
         newBackground = allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
-      } while (newBackground === backgroundImage); 
+      } while (newBackground === backgroundImage);
       setBackgroundImage(newBackground);
     }
   };
 
-return (
-
-  <div className='characterPage' style={{ backgroundImage: `url(${backgroundImage})` }}>
-    <button onClick={() => changeBackground()} className="change-background-btn">
+  return (
+    <div className='characterPage' style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <button onClick={() => changeBackground()} className="change-background-btn">
         Modifier background
       </button>
-    {profileData && (
-      <div className='character'>
-        <div className='name'>{profileData.character.name}</div>
-        <div className='raceAndClass'>{profileData.playable_race.name} / {profileData.playable_class.name}</div>
-        <div>level {profileData.character.level}</div>
-      </div>
-    )}
-    {mediaData && (
-      <div 
-          className={`profilePicture-${profileData.character.name}`} 
-          style={{ 
-            backgroundImage: `url(${mediaData.assets[2].value})`,
+      {profileData && (
+        <div className='character'>
+          <div className='name'>{profileData.character.name}</div>
+          <div className='raceAndClass'>{profileData.playable_race.name} / {profileData.playable_class.name}</div>
+          <div>level {profileData.character.level}</div>
+        </div>
+      )}
+      {mediaData && (
+        <div
+          className={`profilePicture-${profileData?.character.name}`}
+          style={{
+            backgroundImage: `url(${mediaData.assets[2]?.value})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'
           }}>
         </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
 };
 
 export default CharacterPage;

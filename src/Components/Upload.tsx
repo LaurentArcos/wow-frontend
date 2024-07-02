@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Upload = () => {
-  const [inputData, setInputData] = useState('');
-  const [formattedData, setFormattedData] = useState([]);
-  const [isTransferEnabled, setIsTransferEnabled] = useState(false);
-  const [newItemName, setNewItemName] = useState('');
-  const [newItemImagePart, setNewItemImagePart] = useState('');
-  const [showNewItemSection, setShowNewItemSection] = useState(true); 
+interface FormattedData {
+  price: number;
+  name: string;
+}
 
-  const handleInputChange = (e) => {
+const Upload: React.FC = () => {
+  const [inputData, setInputData] = useState<string>('');
+  const [formattedData, setFormattedData] = useState<FormattedData[]>([]);
+  const [isTransferEnabled, setIsTransferEnabled] = useState<boolean>(false);
+  const [newItemName, setNewItemName] = useState<string>('');
+  const [newItemImagePart, setNewItemImagePart] = useState<string>('');
+  const [showNewItemSection, setShowNewItemSection] = useState<boolean>(true); 
+
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(e.target.value);
   };
 
@@ -57,7 +62,7 @@ const Upload = () => {
     }
   };
 
-  const deleteFormattedData = (index) => {
+  const deleteFormattedData = (index: number) => {
     const newData = [...formattedData];
     newData.splice(index, 1);
     setFormattedData(newData);
@@ -65,32 +70,29 @@ const Upload = () => {
 
   return (
     <div className='Upload'>
-  
-  {showNewItemSection && (      
-  <div className="upload-new-item">
-  <div className="input-group"> 
-    <input
-      type="text"
-      value={newItemName}
-      onChange={(e) => setNewItemName(e.target.value)}
-      placeholder="Nom du nouvel item"
-    />
-    <input
-      type="text"
-      value={newItemImagePart}
-      onChange={(e) => setNewItemImagePart(e.target.value)}
-      placeholder="Partie de l'URL de l'image"
-    />
-    <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
-  </div>
-</div>
-       )}
-   
-  
-        
-        <div className="upload-prices">
-          <textarea value={inputData} onChange={handleInputChange} placeholder="Import depuis Auctionator" />
-         <div className='upload-prices-buttons'> 
+      {showNewItemSection && (      
+        <div className="upload-new-item">
+          <div className="input-group"> 
+            <input
+              type="text"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              placeholder="Nom du nouvel item"
+            />
+            <input
+              type="text"
+              value={newItemImagePart}
+              onChange={(e) => setNewItemImagePart(e.target.value)}
+              placeholder="Partie de l'URL de l'image"
+            />
+            <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
+          </div>
+        </div>
+      )}
+      
+      <div className="upload-prices">
+        <textarea value={inputData} onChange={handleInputChange} placeholder="Import depuis Auctionator" />
+        <div className='upload-prices-buttons'> 
           <button onClick={formatData}>Formatter les données</button>
           <button onClick={transferData} disabled={!isTransferEnabled}>Transférer dans la base de données</button>
           {formattedData.map((item, index) => (
@@ -98,11 +100,10 @@ const Upload = () => {
               {item.name} : {item.price}
               <button className='delete-button' onClick={() => deleteFormattedData(index)}>Supprimer</button>
             </div>
-          ))}</div>
+          ))}
         </div>
-  
-  
-  
+      </div>
+
       <ToastContainer theme="colored" />
     </div>
   );

@@ -1,16 +1,52 @@
 import { useState } from "react";
 import axios from "axios";
 
-const ItemsPrixTableau = () => {
-  const [organizedData, setOrganizedData] = useState([]);
+interface Item {
+  Id_Item: number;
+  nom: string;
+  image: string;
+}
 
-  const organizeDataForTable = (items, prix, achats) => {
-    const dataMap = new Map();
+interface Prix {
+  Id_Item: number;
+  Date: string;
+  Prix: string;
+}
+
+interface Achat {
+  Id_Item: number;
+  Active: number;
+}
+
+interface OrganizedData {
+  nom: string;
+  image: string;
+  min: number;
+  max: number;
+  minDate: string;
+  maxDate: string;
+  moyenne: number;
+  median: number;
+  dixDerniers: { prix: string; date: string }[];
+  estActif: boolean;
+  cinqPlusEleves: Set<number>;
+  cinqPlusBas: Set<number>;
+  sixAuDixPlusEleves: Set<number>;
+  sixAuDixPlusFaibles: Set<number>;
+  onzeAuVingtPlusEleves: Set<number>;
+  onzeAuVingtPlusFaibles: Set<number>;
+}
+
+const ItemsPrixTableau: React.FC = () => {
+  const [organizedData, setOrganizedData] = useState<OrganizedData[]>([]);
+
+  const organizeDataForTable = (items: Item[], prix: Prix[], achats: Achat[]): OrganizedData[] => {
+    const dataMap = new Map<number, OrganizedData>();
 
     items.forEach((item) => {
       const prixItem = prix
         .filter((p) => p.Id_Item === item.Id_Item)
-        .sort((a, b) => new Date(a.Date) - new Date(b.Date));
+        .sort((a, b) => new Date(a.Date).getTime() - new Date(b.Date).getTime());
 
       let min = Infinity,
         max = -Infinity,
@@ -67,7 +103,6 @@ const ItemsPrixTableau = () => {
       const onzeAuVingtPlusEleves = new Set(prixTries.slice(20, 10));
       const onzeAuVingtPlusFaibles = new Set(prixTries.slice(-20, -10));
 
-
       dataMap.set(item.Id_Item, {
         nom: item.nom,
         image: item.image,
@@ -91,7 +126,7 @@ const ItemsPrixTableau = () => {
     return Array.from(dataMap.values());
   };
 
-  const calculateMedian = (numbers) => {
+  const calculateMedian = (numbers: number[]): number => {
     if (numbers.length === 0) return 0;
     const sorted = numbers.sort((a, b) => a - b);
     const mid = Math.floor(sorted.length / 2);
@@ -125,7 +160,7 @@ const ItemsPrixTableau = () => {
             <th>Prix Max</th>
             <th>Prix Moyen</th>
             <th>Prix Médian</th>
-            <th colSpan="10">10 Derniers Prix</th>
+            <th colSpan={10}>10 Derniers Prix</th>
           </tr>
         </thead>
         <tbody>
