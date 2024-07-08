@@ -18,6 +18,7 @@ interface ItemNames {
   tableau: string;
   achats: string;
   token: string;
+  itemsList: string;
 }
 
 const Home: React.FC = () => {
@@ -29,7 +30,8 @@ const Home: React.FC = () => {
     upload: 'inv_ammo_arrow_02',
     tableau: 'inv_misc_coin_02',
     achats: 'inv_misc_bag_07',
-    token: 'wow_token01'
+    token: 'wow_token01',
+    itemsList: 'inv_inscription_runescrolloffortitude_yellow'
   }; 
 
   useEffect(() => {
@@ -84,11 +86,14 @@ const Home: React.FC = () => {
           <Link to="/token">
             <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo logo-token" alt="Token" />
           </Link>
-        {Object.entries(characterImages).map(([name, imageUrl]) => (
-          <Link key={name} to={`/uldaman/${name}`}>
-            <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
+          <Link to="/items-status">
+            <img src={`${baseIconUrl}/${itemNames.itemsList}.jpg`} className="logo logo-itemsList" alt="Items Status" />
           </Link>
-        ))}
+          {Object.entries(characterImages).map(([name, imageUrl]) => (
+            <Link key={name} to={`/uldaman/${name}`}>
+              <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
+            </Link>
+          ))}
         </div></div>
       )}
     </div>

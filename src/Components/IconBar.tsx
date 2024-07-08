@@ -17,6 +17,7 @@ interface ItemNames {
   achats: string;
   token: string;
   home: string;
+  itemsList: string;
 }
 
 const IconBar: React.FC = () => {
@@ -29,7 +30,8 @@ const IconBar: React.FC = () => {
     tableau: 'inv_misc_coin_02',
     achats: 'inv_misc_bag_07',
     token: 'wow_token01',
-    home: 'inv_misc_tournaments_banner_human'
+    home: 'inv_misc_tournaments_banner_human',
+    itemsList: 'inv_inscription_runescrolloffortitude_yellow'
   };
 
   useEffect(() => {
@@ -84,6 +86,9 @@ const IconBar: React.FC = () => {
           </Link>
           <Link to="/token">
             <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="iconbar-icon" alt="Token" />
+          </Link>
+          <Link to="/items-status">
+            <img src={`${baseIconUrl}/${itemNames.itemsList}.jpg`} className="iconbar-icon" alt="Items Status" />
           </Link>
           {Object.entries(characterImages).map(([name, imageUrl]) => (
             <Link key={name} to={`/uldaman/${name}`}>
