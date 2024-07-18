@@ -63,7 +63,7 @@ const ItemsStatus: React.FC = () => {
 
   return (
     <div className="items-status-page">
-      <h1 className="items-status-title">Items Status Management</h1>
+      <h2>Items Status Management</h2>
       <div className="items-status-grid">
         {items.map(item => (
           <div key={item.Id_Item} className={`items-status-item ${item.modified ? 'modified' : item.active ? 'active' : 'inactive'}`}>

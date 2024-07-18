@@ -98,7 +98,7 @@ const CharacterPage: React.FC = () => {
       </button>
       {profileData && (
         <div className='character'>
-          <div className='name'>{profileData.character.name}</div>
+          <h2 className='name'>{profileData.character.name}</h2>
           <div className='raceAndClass'>{profileData.playable_race.name} / {profileData.playable_class.name}</div>
           <div>level {profileData.character.level}</div>
         </div>

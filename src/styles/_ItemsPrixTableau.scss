@@ -18,7 +18,7 @@
 }
 
 .tableau button:hover {
-  border: 1px solid variables.$color-secondary;
+  border: 1px solid variables.$color-primary;
 }
 
 .tableau table {
@@ -41,7 +41,7 @@ td {
 }
 
 .nom-produit-actif {
-  color: variables.$color-secondary;
+  color: variables.$color-primary;
 }
 
 .prix-max {

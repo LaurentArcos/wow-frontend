@@ -37,7 +37,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: variables.$color-secondary;
+  color: variables.$color-primary;
 }
 
 body {
@@ -55,6 +55,14 @@ h1 {
   line-height: 1.1;
 }
 
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 3rem;
+  color: variables.$color-primary;
+  font-family: variables.$font-warcraft2;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -67,7 +75,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: variables.$color-secondary;
+  border-color: variables.$color-primary;
 }
 button:focus,
 button:focus-visible {
