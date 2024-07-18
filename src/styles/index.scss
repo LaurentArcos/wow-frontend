@@ -1,4 +1,5 @@
 @use 'reset';
+@use 'variables';
 @use 'App';
 @use 'Upload';
 @use 'ItemsPrixTableau';
@@ -7,7 +8,7 @@
 @use 'Home';
 @use 'IconBar';
 @use 'Token';
-@use 'itemsStatus';
+@use 'ItemsStatus';
 
 @font-face {
   font-family: 'warcraft1';
@@ -19,12 +20,10 @@
   src: local('warcraft2'), url(../assets/Warcraft.ttf) format('truetype');
 }
 
-
 :root {
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: rgb(41, 41, 41);
+  color: variables.$color-text;
+  background-color: variables.$color-bg;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,19 +33,21 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: variables.$color-primary;
   text-decoration: inherit;
 }
 a:hover {
-  color: goldenrod;
+  color: variables.$color-secondary;
 }
 
 body {
   margin: 0;
+  width: 100%;
   display: flex;
   place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  justify-content: center;
+  background-color: variables.$color-bg;
 }
 
 h1 {
@@ -66,7 +67,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: goldenrod;
+  border-color: variables.$color-secondary;
 }
 button:focus,
 button:focus-visible {

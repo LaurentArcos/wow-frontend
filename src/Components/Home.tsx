@@ -73,7 +73,7 @@ const Home: React.FC = () => {
         ) : (
         <div>  
         <h1 className='title'>World of Warcraft</h1>
-        <div className="carousel">
+        <section className="carousel">
           <Link to="/upload">
             <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo logo-upload" alt="Upload" />
           </Link>
@@ -94,7 +94,8 @@ const Home: React.FC = () => {
               <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
             </Link>
           ))}
-        </div></div>
+        </section>
+        </div>
       )}
     </div>
   );

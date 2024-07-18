@@ -1,3 +1,5 @@
+@use 'variables';
+
 .Upload {
   margin-top: 50px;
   width: 1000px;
@@ -48,6 +50,7 @@
       cursor: not-allowed;
     }
   }
+
   .input-group {
     display: flex;
     flex-direction: column;
@@ -65,7 +68,7 @@
     }
   }
 
-  .delete-button{
+  .delete-button {
     background-color: #ad4545;
     color: white;
     padding: 5px 10px;
@@ -75,5 +78,4 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-
 }

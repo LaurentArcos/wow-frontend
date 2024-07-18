@@ -1,7 +1,9 @@
+@use 'variables';
+
 .title {
   font-size: 6rem;
-  color: gold;
-  font-family: "warcraft2";
+  color: variables.$color-secondary;
+  font-family: variables.$font-warcraft2;
   text-align: center;
   margin: 0 auto 5rem;
 }
@@ -56,4 +58,3 @@
 .logo-falak:hover {
   filter: drop-shadow(0 0 3rem red);
 }
-

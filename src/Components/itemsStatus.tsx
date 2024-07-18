@@ -7,6 +7,7 @@ interface Item {
   Id_Item: number;
   nom: string;
   active: boolean;
+  modified?: boolean;
 }
 
 const ItemsStatus: React.FC = () => {
@@ -18,7 +19,8 @@ const ItemsStatus: React.FC = () => {
     const fetchItems = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/items`);
-        setItems(response.data);
+        const sortedItems = response.data.sort((a: Item, b: Item) => a.nom.localeCompare(b.nom));
+        setItems(sortedItems);
       } catch (error) {
         console.error('Error fetching items:', error);
         toast.error('Error fetching items!');
@@ -28,7 +30,7 @@ const ItemsStatus: React.FC = () => {
   }, []);
 
   const handleCheckboxChange = (id: number, active: boolean, nom: string) => {
-    setItems(items.map(item => item.Id_Item === id ? { ...item, active } : item));
+    setItems(items.map(item => item.Id_Item === id ? { ...item, active, modified: true } : item));
     const existingIndex = updatedItems.findIndex(item => item.id === id);
     if (existingIndex !== -1) {
       const newUpdatedItems = [...updatedItems];
@@ -50,6 +52,9 @@ const ItemsStatus: React.FC = () => {
       const activatedCount = updatedItems.filter(item => item.active).length;
       const deactivatedCount = updatedItems.filter(item => !item.active).length;
       toast.info(`${activatedCount} item(s) activated, ${deactivatedCount} item(s) deactivated`);
+
+      setItems(items.map(item => ({ ...item, modified: false })));
+      setUpdatedItems([]);
     } catch (error) {
       toast.error('Error updating status!');
       console.error('Error updating status:', error);
@@ -58,35 +63,26 @@ const ItemsStatus: React.FC = () => {
 
   return (
     <div className="items-status-page">
-      <h1>Items Status Management</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Actif</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map(item => (
-            <tr key={item.Id_Item}>
-              <td>{item.nom}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={item.active}
-                  onChange={(e) => handleCheckboxChange(item.Id_Item, e.target.checked, item.nom)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button onClick={handleSubmit}>Valider</button>
+      <h1 className="items-status-title">Items Status Management</h1>
+      <div className="items-status-grid">
+        {items.map(item => (
+          <div key={item.Id_Item} className={`items-status-item ${item.modified ? 'modified' : item.active ? 'active' : 'inactive'}`}>
+            <span>{item.nom}</span>
+            <input
+              type="checkbox"
+              className="items-status-checkbox"
+              checked={item.active}
+              onChange={(e) => handleCheckboxChange(item.Id_Item, e.target.checked, item.nom)}
+            />
+          </div>
+        ))}
+      </div>
+      <button className="items-status-button" onClick={handleSubmit}>Valider</button>
       <div className="modifications-list">
-        <ul>
+        <ul className="modifications-list-ul">
           {modifications.map((mod, index) => (
-            <li key={index}>
-              {mod.nom}: <span className={mod.active ? 'active' : 'inactive'}>{mod.active ? 'Activé' : 'Desactivé'}</span>
+            <li key={index} className="modifications-list-li">
+              {mod.nom}: <span className={mod.active ? 'modification-active' : 'modification-inactive'}>{mod.active ? 'Activé' : 'Desactivé'}</span>
             </li>
           ))}
         </ul>

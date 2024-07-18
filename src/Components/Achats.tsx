@@ -162,7 +162,7 @@ const Achats: React.FC = () => {
         />
         <button onClick={handleSubmit}>Ajouter</button>
       </div>
-      <table>
+      <table className="achats-table">
         <thead>
           <tr>
             <th>Nom du Produit</th>
@@ -198,7 +198,7 @@ const Achats: React.FC = () => {
         </tbody>
       </table>
 
-      <table>
+      <table className="achats-table">
         <thead>
           <tr>
             <th>Nom du Produit</th>
@@ -217,7 +217,7 @@ const Achats: React.FC = () => {
             </tr>
           ))}
           <tr>
-          <td colSpan={2}>Total Global</td>
+            <td colSpan={2}>Total Global</td>
             <td>{totalGlobal.toLocaleString("fr-FR")}</td>
           </tr>
         </tbody>

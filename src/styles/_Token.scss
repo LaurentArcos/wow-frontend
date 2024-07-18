@@ -1,6 +1,8 @@
+@use 'variables';
+
 .token-price {
-  font-family: "warcraft1";
-  color: goldenrod;
+  font-family: variables.$font-warcraft1;
+  color: variables.$color-secondary;
   font-size: 10rem;
   letter-spacing: 10px;
   margin-bottom: 20px;
