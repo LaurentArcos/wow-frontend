@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import IconBar from './IconBar';
+import React, { ReactNode } from "react";
+import IconBar from "./IconBar";
 
 interface LayoutProps {
   children: ReactNode;

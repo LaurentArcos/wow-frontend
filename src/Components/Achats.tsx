@@ -30,14 +30,17 @@ const Achats: React.FC = () => {
 
   const totalParProduit = achats
     .filter((achat) => achat.Active === 1)
-    .reduce<Record<string, { totalQuantite: number; totalValeur: number }>>((acc, achat) => {
-      if (!acc[achat.nom!]) {
-        acc[achat.nom!] = { totalQuantite: 0, totalValeur: 0 };
-      }
-      acc[achat.nom!].totalQuantite += achat.Quantite;
-      acc[achat.nom!].totalValeur += achat.Quantite * achat.PrixUnitaire;
-      return acc;
-    }, {});
+    .reduce<Record<string, { totalQuantite: number; totalValeur: number }>>(
+      (acc, achat) => {
+        if (!acc[achat.nom!]) {
+          acc[achat.nom!] = { totalQuantite: 0, totalValeur: 0 };
+        }
+        acc[achat.nom!].totalQuantite += achat.Quantite;
+        acc[achat.nom!].totalValeur += achat.Quantite * achat.PrixUnitaire;
+        return acc;
+      },
+      {}
+    );
 
   const totalParProduitArray = Object.keys(totalParProduit).map((nom) => ({
     nom,
@@ -59,16 +62,18 @@ const Achats: React.FC = () => {
         axios
           .get(`${import.meta.env.VITE_API_URL}/achats`)
           .then((achatsResponse) => {
-            const achatsAvecNomEtImage = achatsResponse.data.map((achat: Achat) => {
-              const itemCorrespondant = response.data.find(
-                (item: Item) => item.Id_Item === achat.Id_Item
-              );
-              return {
-                ...achat,
-                nom: itemCorrespondant?.nom,
-                imageUrl: itemCorrespondant?.image,
-              };
-            });
+            const achatsAvecNomEtImage = achatsResponse.data.map(
+              (achat: Achat) => {
+                const itemCorrespondant = response.data.find(
+                  (item: Item) => item.Id_Item === achat.Id_Item
+                );
+                return {
+                  ...achat,
+                  nom: itemCorrespondant?.nom,
+                  imageUrl: itemCorrespondant?.image,
+                };
+              }
+            );
             setAchats(achatsAvecNomEtImage);
           })
           .catch((error) => console.error(error));
@@ -77,7 +82,9 @@ const Achats: React.FC = () => {
   }, []);
 
   const handleSubmit = () => {
-    const nomItem = items.find((item) => item.Id_Item === parseInt(selectedItem, 10))?.nom;
+    const nomItem = items.find(
+      (item) => item.Id_Item === parseInt(selectedItem, 10)
+    )?.nom;
     const achatData = {
       Id_Item: parseInt(selectedItem, 10),
       PrixUnitaire: parseFloat(prixUnitaire),
@@ -95,7 +102,9 @@ const Achats: React.FC = () => {
             ...achatData,
             Id_Achat: achats.length + 1, // Assuming new Id_Achat is incremental
             Active: 1,
-            imageUrl: items.find((item) => item.Id_Item === parseInt(selectedItem, 10))?.image,
+            imageUrl: items.find(
+              (item) => item.Id_Item === parseInt(selectedItem, 10)
+            )?.image,
           },
         ]);
         setSelectedItem("");
@@ -117,7 +126,10 @@ const Achats: React.FC = () => {
     }
 
     axios
-      .post(`${import.meta.env.VITE_API_URL}/modifierAchatActive`, { id: idAchat, active: 0 })
+      .post(`${import.meta.env.VITE_API_URL}/modifierAchatActive`, {
+        id: idAchat,
+        active: 0,
+      })
       .then(() => {
         setAchats(
           achats.map((achat) => {
@@ -128,8 +140,12 @@ const Achats: React.FC = () => {
           })
         );
 
-        const itemName = items.find((item) => item.Id_Item === achatToDisable.Id_Item)?.nom;
-        toast.success(`achat "${idAchat}" de "${itemName}" marqué comme revendu.`);
+        const itemName = items.find(
+          (item) => item.Id_Item === achatToDisable.Id_Item
+        )?.nom;
+        toast.success(
+          `achat "${idAchat}" de "${itemName}" marqué comme revendu.`
+        );
       })
       .catch((error) => {
         console.error("Erreur lors de la mise à jour de l'achat:", error);
@@ -140,8 +156,11 @@ const Achats: React.FC = () => {
   return (
     <div className="achats-container">
       <h2>Achats</h2>
-      <div className="input-group">
-        <select value={selectedItem} onChange={(e) => setSelectedItem(e.target.value)}>
+      <section className="input-group">
+        <select
+          value={selectedItem}
+          onChange={(e) => setSelectedItem(e.target.value)}
+        >
           <option value="">Sélectionnez un produit</option>
           {items.map((item) => (
             <option key={item.Id_Item} value={item.Id_Item}>
@@ -152,77 +171,94 @@ const Achats: React.FC = () => {
         <input
           type="number"
           value={prixUnitaire}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setPrixUnitaire(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setPrixUnitaire(e.target.value)
+          }
           placeholder="Prix unitaire"
         />
         <input
           type="number"
           value={quantite}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setQuantite(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setQuantite(e.target.value)
+          }
           placeholder="Quantité"
         />
         <button onClick={handleSubmit}>Ajouter</button>
-      </div>
-      <table className="achats-table">
-        <thead>
-          <tr>
-            <th>Nom du Produit</th>
-            <th>Prix Unitaire</th>
-            <th>Quantité</th>
-            <th>Prix Total</th>
-            <th>Date Achat</th>
-          </tr>
-        </thead>
-        <tbody>
-          {achats
-            .filter((achat) => achat.Active === 1)
-            .map((achat, index) => (
+      </section>
+      <section>
+        <table className="achats-table">
+          <thead>
+            <tr>
+              <th>Nom du Produit</th>
+              <th>Prix Unitaire</th>
+              <th>Quantité</th>
+              <th>Prix Total</th>
+              <th>Date Achat</th>
+            </tr>
+          </thead>
+          <tbody>
+            {achats
+              .filter((achat) => achat.Active === 1)
+              .map((achat, index) => (
+                <tr key={index}>
+                  <td>
+                    {achat.imageUrl && (
+                      <img src={achat.imageUrl} alt={achat.nom} />
+                    )}
+                    {achat.nom}
+                  </td>
+                  <td>{achat.PrixUnitaire.toLocaleString("fr-FR")}</td>
+                  <td>{achat.Quantite.toLocaleString("fr-FR")}</td>
+                  <td>
+                    {(achat.PrixUnitaire * achat.Quantite).toLocaleString(
+                      "fr-FR"
+                    )}
+                  </td>
+                  <td>
+                    {new Date(achat.DateAchat).toLocaleDateString("fr-FR", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </td>
+                  <td>
+                    <button onClick={() => desactiverAchat(achat.Id_Achat)}>
+                      Revendu !
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <table className="achats-table">
+          <thead>
+            <tr>
+              <th>Nom du Produit</th>
+              <th>Total Quantité</th>
+              <th>Total Valeur</th>
+              <th>Prix Unitaire Moyen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {totalParProduitArray.map((produit, index) => (
               <tr key={index}>
+                <td>{produit.nom}</td>
+                <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
+                <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
                 <td>
-                  {achat.imageUrl && <img src={achat.imageUrl} alt={achat.nom} />}
-                  {achat.nom}
-                </td>
-                <td>{achat.PrixUnitaire.toLocaleString("fr-FR")}</td>
-                <td>{achat.Quantite.toLocaleString("fr-FR")}</td>
-                <td>{(achat.PrixUnitaire * achat.Quantite).toLocaleString("fr-FR")}</td>
-                <td>
-                  {new Date(achat.DateAchat).toLocaleDateString("fr-FR", {
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </td>
-                <td>
-                  <button onClick={() => desactiverAchat(achat.Id_Achat)}>Revendu !</button>
+                  {(produit.totalValeur / produit.totalQuantite).toFixed(2)}
                 </td>
               </tr>
             ))}
-        </tbody>
-      </table>
-
-      <table className="achats-table">
-        <thead>
-          <tr>
-            <th>Nom du Produit</th>
-            <th>Total Quantité</th>
-            <th>Total Valeur</th>
-            <th>Prix Unitaire Moyen</th>
-          </tr>
-        </thead>
-        <tbody>
-          {totalParProduitArray.map((produit, index) => (
-            <tr key={index}>
-              <td>{produit.nom}</td>
-              <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
-              <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
-              <td>{(produit.totalValeur / produit.totalQuantite).toFixed(2)}</td>
+            <tr>
+              <td colSpan={2}>Total Global</td>
+              <td>{totalGlobal.toLocaleString("fr-FR")}</td>
             </tr>
-          ))}
-          <tr>
-            <td colSpan={2}>Total Global</td>
-            <td>{totalGlobal.toLocaleString("fr-FR")}</td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </section>
       <ToastContainer theme="colored" />
     </div>
   );
