@@ -72,7 +72,7 @@ const Home: React.FC = () => {
         <img src={loader} alt="Loading..." className="loader" />
         ) : (
         <div>  
-        <h1 className='title'>World of Warcraft</h1>
+        <h1 className='title'>World of WarCraft</h1>
         <section className="carousel">
           <Link to="/upload">
             <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo logo-upload" alt="Upload" />

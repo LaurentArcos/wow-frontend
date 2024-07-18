@@ -23,6 +23,7 @@ const Token: React.FC = () => {
 
   return (
     <div>
+      <h2>TOKEN</h2>
       <p className='token-price'>{tokenData.price}</p>
       <p className='token-date'>Dernière mise à jour : {tokenData.lastUpdated}</p>
     </div>

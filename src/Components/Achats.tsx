@@ -139,6 +139,7 @@ const Achats: React.FC = () => {
 
   return (
     <div className="achats-container">
+      <h2>Achats</h2>
       <div className="input-group">
         <select value={selectedItem} onChange={(e) => setSelectedItem(e.target.value)}>
           <option value="">Sélectionnez un produit</option>

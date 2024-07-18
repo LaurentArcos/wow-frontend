@@ -70,6 +70,7 @@ const Upload: React.FC = () => {
 
   return (
     <div className='Upload'>
+      <h2>Upload de Prix et Items</h2>
       {showNewItemSection && (      
         <div className="upload-new-item">
           <div className="input-group"> 

@@ -150,6 +150,7 @@ const ItemsPrixTableau: React.FC = () => {
 
   return (
     <div className="tableau">
+       <h2>Prix des Items</h2>
       <button onClick={fetchData}>Récupérer tableau</button>
 
       <table>
