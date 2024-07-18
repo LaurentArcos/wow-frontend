@@ -74,26 +74,30 @@ const Home: React.FC = () => {
         <div>  
         <h1 className='title'>World of WarCraft</h1>
         <section className="carousel">
-          <Link to="/upload">
-            <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo logo-upload" alt="Upload" />
-          </Link>
-          <Link to="/tableau">
-            <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo logo-tableau" alt="Tableau" />
-          </Link>
-          <Link to="/achats">
-            <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo logo-achats" alt="Achats" />
-          </Link>
-          <Link to="/token">
-            <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo logo-token" alt="Token" />
-          </Link>
-          <Link to="/items-status">
-            <img src={`${baseIconUrl}/${itemNames.itemsList}.jpg`} className="logo logo-itemsList" alt="Items Status" />
-          </Link>
-          {Object.entries(characterImages).map(([name, imageUrl]) => (
-            <Link key={name} to={`/uldaman/${name}`}>
-              <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
+          <div className="non-character-icons">
+            <Link to="/upload">
+              <img src={`${baseIconUrl}/${itemNames.upload}.jpg`} className="logo logo-upload" alt="Upload" />
             </Link>
-          ))}
+            <Link to="/tableau">
+              <img src={`${baseIconUrl}/${itemNames.tableau}.jpg`} className="logo logo-tableau" alt="Tableau" />
+            </Link>
+            <Link to="/achats">
+              <img src={`${baseIconUrl}/${itemNames.achats}.jpg`} className="logo logo-achats" alt="Achats" />
+            </Link>
+            <Link to="/token">
+              <img src={`${baseIconUrl}/${itemNames.token}.jpg`} className="logo logo-token" alt="Token" />
+            </Link>
+            <Link to="/items-status">
+              <img src={`${baseIconUrl}/${itemNames.itemsList}.jpg`} className="logo logo-itemsList" alt="Items Status" />
+            </Link>
+          </div>
+          <div className="character-icons">
+            {Object.entries(characterImages).map(([name, imageUrl]) => (
+              <Link key={name} to={`/uldaman/${name}`}>
+                <img src={imageUrl ?? ''} className={`logo logo-${name}`} alt={`${name} character`} />
+              </Link>
+            ))}
+          </div>
         </section>
         </div>
       )}

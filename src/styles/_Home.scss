@@ -10,9 +10,16 @@
 
 .carousel {
   display: flex;
+  flex-direction: column; // Assure que les éléments sont alignés en colonne
+  align-items: center;
+}
+
+.non-character-icons,
+.character-icons {
+  display: flex;
   flex-wrap: wrap;
-  margin: auto;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .logo {
@@ -37,6 +44,10 @@
 
 .logo-token:hover {
   filter: drop-shadow(0 0 3rem #2ea300);
+}
+
+.logo-itemsList:hover {
+  filter: drop-shadow(0 0 3rem #959696);
 }
 
 .logo-thryndil:hover {
