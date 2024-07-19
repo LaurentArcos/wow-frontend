@@ -24,10 +24,15 @@ interface PlayableClass {
   name: string;
 }
 
+interface ActiveSpec {
+  name: string;
+}
+
 interface ProfileData {
   character: Character;
   playable_race: PlayableRace;
   playable_class: PlayableClass;
+  active_spec: ActiveSpec;
 }
 
 interface MediaData {
@@ -51,10 +56,10 @@ const CharacterPage: React.FC = () => {
     useState<AchievementsData | null>(null);
   const [backgroundImage, setBackgroundImage] = useState(TavernBackground);
 
-  console.log(profileData);
-  console.log(mediaData);
-  console.log(achievementsSummaryData);
-  console.log(achievementsStatisticsData);
+  console.log("Profile Data:", profileData);
+  console.log("Media Data:", mediaData);
+  console.log("Achievements Summary Data:", achievementsSummaryData);
+  console.log("Achievements Statistics Data:", achievementsStatisticsData);
 
   useEffect(() => {
     Promise.all([
@@ -90,8 +95,8 @@ const CharacterPage: React.FC = () => {
           setMediaData(mediaResponse.data);
           setAchievementsSummaryData(achievementsSummaryResponse.data);
           setAchievementsStatisticsData(achievementsStatisticsResponse.data);
-          console.log(achievementsSummaryResponse.data);
-          console.log(achievementsStatisticsResponse.data);
+          console.log("Achievements Summary Response:", achievementsSummaryResponse.data);
+          console.log("Achievements Statistics Response:", achievementsStatisticsResponse.data);
         }
       )
       .catch((error) => console.error(error));
@@ -136,10 +141,12 @@ const CharacterPage: React.FC = () => {
       {profileData && (
         <div className="character">
           <h2 className="name">{profileData.character.name}</h2>
-          <div className="raceAndClass">
-            {profileData.playable_race.name} / {profileData.playable_class.name}
+          <div className="race">{profileData.playable_race.name}</div>
+          <div className="class">
+            {profileData.playable_class.name}{" "}
+            <span className="spec">({profileData.active_spec.name})</span>
           </div>
-          <div>level {profileData.character.level}</div>
+          {/* <div>level {profileData.character.level}</div> */}
         </div>
       )}
       {mediaData && (

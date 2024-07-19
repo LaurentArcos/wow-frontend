@@ -18,32 +18,63 @@
   letter-spacing: 0.2rem;
   font-family: variables.$font-warcraft1;
   margin-top: 10rem;
+  margin-bottom: 1rem;
 }
 
-.raceAndClass {
+.race {
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-family: variables.$font-warcraft1;
   text-align: center;
 }
 
+.class {
+  color: white;
+  font-size: 1.5rem;
+  font-family: variables.$font-warcraft1;
+  text-align: center;
+
+  .spec {
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+}
+
 .profilePicture {
   &-Thryndil {
-    margin: 0rem auto;
+    margin: 1rem auto 0;
     height: 55vh;
     width: 55vw;
   }
 
   &-Olbia {
-    height: 65vh;
-    width: 65vw;
-    margin: -5rem auto;
+    height: 70vh;
+    width: 70vw;
+    margin: -7rem auto;
   }
 
   &-Lukki {
-    height: 50vh;
-    width: 50vw;
-    margin: 2rem auto;
+    height: 55vh;
+    width: 55vw;
+    margin: -3rem auto;
+  }
+
+  &-Sharubu {
+    height: 60vh;
+    width: 60vw;
+    margin: -2rem auto;
+  }
+
+  &-Falak {
+    height: 60vh;
+    width: 60vw;
+    margin: -3rem auto;
+  }
+
+  &-Hexza {
+    height: 60vh;
+    width: 60vw;
+    margin: -7rem auto;
   }
 }
 
