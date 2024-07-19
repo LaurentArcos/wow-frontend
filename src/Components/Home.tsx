@@ -11,6 +11,7 @@ interface CharacterImageMap {
 interface Character {
   realm: string;
   name: string;
+  faction: "alliance" | "horde";
 }
 
 interface ItemNames {
@@ -23,6 +24,7 @@ interface ItemNames {
 
 const Home: React.FC = () => {
   const [characterImages, setCharacterImages] = useState<CharacterImageMap>({});
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
 
@@ -55,12 +57,16 @@ const Home: React.FC = () => {
     const loadCharacterImages = async () => {
       setIsLoading(true);
       const characters: Character[] = [
-        { realm: "uldaman", name: "thryndil" },
-        { realm: "uldaman", name: "olbia" },
-        { realm: "uldaman", name: "lukki" },
-        { realm: "uldaman", name: "sharubu" },
-        { realm: "uldaman", name: "falak" },
+        { realm: "uldaman", name: "thryndil", faction: "alliance" },
+        { realm: "uldaman", name: "olbia", faction: "horde" },
+        { realm: "uldaman", name: "lukki", faction: "alliance" },
+        { realm: "uldaman", name: "sharubu", faction: "alliance" },
+        { realm: "uldaman", name: "falak", faction: "horde" },
+        { realm: "uldaman", name: "hexza", faction: "alliance" },
+        { realm: "uldaman", name: "thenerol", faction: "alliance" },
       ];
+
+      setCharacters(characters);
 
       const images: CharacterImageMap = {};
       for (const character of characters) {
@@ -122,15 +128,20 @@ const Home: React.FC = () => {
               </Link>
             </div>
             <div className="character-icons">
-              {Object.entries(characterImages).map(([name, imageUrl]) => (
-                <Link key={name} to={`/uldaman/${name}`}>
-                  <img
-                    src={imageUrl ?? ""}
-                    className={`logo logo-${name}`}
-                    alt={`${name} character`}
-                  />
-                </Link>
-              ))}
+              {Object.entries(characterImages).map(([name, imageUrl]) => {
+                const character = characters.find((char) => char.name === name);
+                return (
+                  <Link key={name} to={`/uldaman/${name}`}>
+                    <img
+                      src={imageUrl ?? ""}
+                      className={`logo logo-character ${
+                        character?.faction
+                      }`}
+                      alt={`${name} character`}
+                    />
+                  </Link>
+                );
+              })}
             </div>
           </section>
         </div>
