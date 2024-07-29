@@ -21,12 +21,19 @@ interface Achat {
   imageUrl?: string;
 }
 
+interface Prix {
+  Id_Item: number;
+  Date: string;
+  Prix: string;
+}
+
 const Achats: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [prixUnitaire, setPrixUnitaire] = useState<string>("");
   const [quantite, setQuantite] = useState<string>("");
   const [achats, setAchats] = useState<Achat[]>([]);
+  const [lastPrices, setLastPrices] = useState<Record<number, number>>({});
 
   const totalParProduit = achats
     .filter((achat) => achat.Active === 1)
@@ -54,31 +61,46 @@ const Achats: React.FC = () => {
   );
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/items`)
-      .then((response) => {
-        setItems(response.data);
+    const fetchData = async () => {
+      try {
+        const [itemsResponse, achatsResponse, prixResponse] = await Promise.all([
+          axios.get(`${import.meta.env.VITE_API_URL}/items`),
+          axios.get(`${import.meta.env.VITE_API_URL}/achats`),
+          axios.get(`${import.meta.env.VITE_API_URL}/prix`)
+        ]);
 
-        axios
-          .get(`${import.meta.env.VITE_API_URL}/achats`)
-          .then((achatsResponse) => {
-            const achatsAvecNomEtImage = achatsResponse.data.map(
-              (achat: Achat) => {
-                const itemCorrespondant = response.data.find(
-                  (item: Item) => item.Id_Item === achat.Id_Item
-                );
-                return {
-                  ...achat,
-                  nom: itemCorrespondant?.nom,
-                  imageUrl: itemCorrespondant?.image,
-                };
-              }
+        setItems(itemsResponse.data);
+
+        const achatsAvecNomEtImage = achatsResponse.data.map(
+          (achat: Achat) => {
+            const itemCorrespondant = itemsResponse.data.find(
+              (item: Item) => item.Id_Item === achat.Id_Item
             );
-            setAchats(achatsAvecNomEtImage);
-          })
-          .catch((error) => console.error(error));
-      })
-      .catch((error) => console.error(error));
+            return {
+              ...achat,
+              nom: itemCorrespondant?.nom,
+              imageUrl: itemCorrespondant?.image,
+            };
+          }
+        );
+
+        setAchats(achatsAvecNomEtImage);
+
+        // Create a map to store the latest price for each item
+        const lastPrices = prixResponse.data.reduce((acc: Record<number, {prix: number, date: string}>, prix: Prix) => {
+          if (!acc[prix.Id_Item] || new Date(prix.Date) > new Date(acc[prix.Id_Item].date)) {
+            acc[prix.Id_Item] = {prix: parseFloat(prix.Prix), date: prix.Date};
+          }
+          return acc;
+        }, {});
+
+        setLastPrices(Object.fromEntries(Object.entries(lastPrices).map(([key, value]) => [key, value.prix])));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleSubmit = () => {
@@ -153,6 +175,29 @@ const Achats: React.FC = () => {
       });
   };
 
+  const calculateDifference = (totalValeur: number, valeurActuelle: number | "N/A") => {
+    if (valeurActuelle === "N/A") return "N/A";
+    const difference = valeurActuelle - totalValeur;
+    if (difference > 0) return <span style={{ color: "green" }}>+{difference.toLocaleString("fr-FR")}</span>;
+    if (difference < 0) return <span style={{ color: "red" }}>-{Math.abs(difference).toLocaleString("fr-FR")}</span>;
+    return <span style={{ color: "white" }}>{difference.toLocaleString("fr-FR")}</span>;
+  };
+
+  const calculatePercentageDifference = (totalValeur: number, valeurActuelle: number | "N/A") => {
+    if (valeurActuelle === "N/A" || totalValeur === 0) return "N/A";
+    const percentageDifference = ((valeurActuelle - totalValeur) / totalValeur) * 100;
+    if (percentageDifference > 0) return <span style={{ color: "green" }}>+{percentageDifference.toFixed(2)}%</span>;
+    if (percentageDifference < 0) return <span style={{ color: "red" }}>-{Math.abs(percentageDifference).toFixed(2)}%</span>;
+    return <span style={{ color: "white" }}>{percentageDifference.toFixed(2)}%</span>;
+  };
+
+  const totalValeurActuelle = totalParProduitArray.reduce((acc, produit) => {
+    const dernierPrix = lastPrices[items.find(item => item.nom === produit.nom)?.Id_Item ?? 0];
+    return acc + (dernierPrix ? dernierPrix * produit.totalQuantite : 0);
+  }, 0);
+
+  const totalDifference = totalValeurActuelle - totalGlobal;
+
   return (
     <div className="achats-container">
       <h2>Achats</h2>
@@ -195,6 +240,7 @@ const Achats: React.FC = () => {
               <th>Quantité</th>
               <th>Prix Total</th>
               <th>Date Achat</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -238,23 +284,41 @@ const Achats: React.FC = () => {
               <th>Nom du Produit</th>
               <th>Total Quantité</th>
               <th>Total Valeur</th>
+              <th>Valeur Actuelle</th>
+              <th>Différence</th>
+              <th>% Différence</th>
               <th>Prix Unitaire Moyen</th>
+              <th>Dernier Prix</th>
+              <th>% Différence Prix</th>
             </tr>
           </thead>
           <tbody>
-            {totalParProduitArray.map((produit, index) => (
-              <tr key={index}>
-                <td>{produit.nom}</td>
-                <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
-                <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
-                <td>
-                  {(produit.totalValeur / produit.totalQuantite).toFixed(2)}
-                </td>
-              </tr>
-            ))}
+            {totalParProduitArray.map((produit, index) => {
+              const dernierPrix = lastPrices[items.find(item => item.nom === produit.nom)?.Id_Item ?? 0];
+              const valeurActuelle = dernierPrix ? dernierPrix * produit.totalQuantite : "N/A";
+
+              return (
+                <tr key={index}>
+                  <td>{produit.nom}</td>
+                  <td>{produit.totalQuantite.toLocaleString("fr-FR")}</td>
+                  <td>{produit.totalValeur.toLocaleString("fr-FR")}</td>
+                  <td>{valeurActuelle !== "N/A" ? valeurActuelle.toLocaleString("fr-FR") : valeurActuelle}</td>
+                  <td>{calculateDifference(produit.totalValeur, valeurActuelle)}</td>
+                  <td>{calculatePercentageDifference(produit.totalValeur, valeurActuelle)}</td>
+                  <td>
+                    {(produit.totalValeur / produit.totalQuantite).toFixed(2)}
+                  </td>
+                  <td>{dernierPrix?.toLocaleString("fr-FR") ?? "N/A"}</td>
+                  <td>{calculatePercentageDifference(produit.totalValeur / produit.totalQuantite, dernierPrix)}</td>
+                </tr>
+              );
+            })}
             <tr>
               <td colSpan={2}>Total Global</td>
               <td>{totalGlobal.toLocaleString("fr-FR")}</td>
+              <td>{totalValeurActuelle.toLocaleString("fr-FR")}</td>
+              <td>{calculateDifference(totalGlobal, totalValeurActuelle)}</td>
+              <td>{calculatePercentageDifference(totalGlobal, totalValeurActuelle)}</td>
             </tr>
           </tbody>
         </table>
