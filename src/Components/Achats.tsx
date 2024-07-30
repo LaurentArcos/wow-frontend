@@ -94,7 +94,7 @@ const Achats: React.FC = () => {
           return acc;
         }, {});
 
-        setLastPrices(Object.fromEntries(Object.entries(lastPrices).map(([key, value]) => [key, value.prix])));
+        setLastPrices(Object.fromEntries(Object.entries(lastPrices).map(([key, value]) => [key, (value as { prix: number, date: string }).prix])));
       } catch (error) {
         console.error(error);
       }

@@ -61,7 +61,7 @@ const IconBar: React.FC = () => {
         { realm: "uldaman", name: "sharubu" },
         { realm: "uldaman", name: "falak" },
         { realm: "uldaman", name: "hexza" },
-        { realm: "khaz-modan", name: "thenerol" },
+        { realm: "khaz-modan", name: "morcart" },
       ];
 
       const images: CharacterImageMap = {};
