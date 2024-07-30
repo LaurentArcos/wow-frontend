@@ -10,7 +10,7 @@ interface Item {
   modified?: boolean;
 }
 
-const ItemsStatus: React.FC = () => {
+const ItemStatus: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [updatedItems, setUpdatedItems] = useState<
     { id: number; active: boolean }[]
@@ -127,4 +127,4 @@ const ItemsStatus: React.FC = () => {
   );
 };
 
-export default ItemsStatus;
+export default ItemStatus;

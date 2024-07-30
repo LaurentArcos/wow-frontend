@@ -6,7 +6,7 @@ import CharacterPage from "./CharacterPage";
 import Home from "./Home";
 import Token from "./Token";
 import Layout from "./Layout";
-import ItemsStatus from "./ItemsStatus";
+import ItemStatus from "./ItemStatus";
 
 const App: React.FC = () => {
   return (
@@ -50,7 +50,7 @@ const App: React.FC = () => {
             path="/items-status"
             element={
               <Layout>
-                <ItemsStatus />
+                <ItemStatus />
               </Layout>
             }
           />
