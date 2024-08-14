@@ -64,6 +64,7 @@ const Home: React.FC = () => {
         { realm: "uldaman", name: "falak", faction: "horde" },
         { realm: "uldaman", name: "hexza", faction: "alliance" },
         { realm: "khaz-modan", name: "morcart", faction: "horde" },
+        { realm: "uldaman", name: "yocjan", faction: "horde" },
       ];
 
       setCharacters(characters);
