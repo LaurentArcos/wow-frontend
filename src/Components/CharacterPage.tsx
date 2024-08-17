@@ -150,6 +150,7 @@ const CharacterPage: React.FC = () => {
         </div>
       )}
       {mediaData && (
+        //* Attention pour afficher les images de spersonnages il faut également modifier le css
         <div
           className={`profilePicture-${profileData?.character.name}`}
           style={{

@@ -132,12 +132,10 @@ const Home: React.FC = () => {
               {Object.entries(characterImages).map(([name, imageUrl]) => {
                 const character = characters.find((char) => char.name === name);
                 return (
-                  <Link key={name} to={`/uldaman/${name}`}>
+                  <Link key={name} to={`/${character?.realm}/${name}`}>
                     <img
                       src={imageUrl ?? ""}
-                      className={`logo logo-character ${
-                        character?.faction
-                      }`}
+                      className={`logo logo-character ${character?.faction}`}
                       alt={`${name} character`}
                     />
                   </Link>

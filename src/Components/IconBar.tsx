@@ -22,6 +22,7 @@ interface ItemNames {
 
 const IconBar: React.FC = () => {
   const [characterImages, setCharacterImages] = useState<CharacterImageMap>({});
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
 
@@ -64,6 +65,8 @@ const IconBar: React.FC = () => {
         { realm: "khaz-modan", name: "morcart" },
         { realm: "uldaman", name: "yocjan" },
       ];
+
+      setCharacters(characters);
 
       const images: CharacterImageMap = {};
       for (const character of characters) {
@@ -127,15 +130,18 @@ const IconBar: React.FC = () => {
               alt="Items Status"
             />
           </Link>
-          {Object.entries(characterImages).map(([name, imageUrl]) => (
-            <Link key={name} to={`/uldaman/${name}`}>
-              <img
-                src={imageUrl ?? ""}
-                className="iconbar-icon"
-                alt={`${name} character`}
-              />
-            </Link>
-          ))}
+          {Object.entries(characterImages).map(([name, imageUrl]) => {
+            const character = characters.find((char) => char.name === name);
+            return (
+              <Link key={name} to={`/${character?.realm}/${name}`}>
+                <img
+                  src={imageUrl ?? ""}
+                  className="iconbar-icon"
+                  alt={`${name} character`}
+                />
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
