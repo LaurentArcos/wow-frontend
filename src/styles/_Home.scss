@@ -1,17 +1,40 @@
 @use 'variables';
 
+logout-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: variables.$color-primary;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken(variables.$color-primary, 10%);
+  }
+}
+
 .title {
   font-size: 6rem;
   color: variables.$color-primary;
   font-family: variables.$font-warcraft2;
   text-align: center;
-  margin: 0 auto 5rem;
+  margin: auto;
 }
 
 .carousel {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &.centered {
+    justify-content: center;
+    min-height: 70vh;
+  }
 }
 
 .non-character-icons,
@@ -22,12 +45,24 @@
   margin-bottom: 2rem;
 }
 
+.non-character-icons.small-links {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  .logo {
+    height: 5rem;
+  }
+}
+
 .logo {
   height: 10rem;
   padding: 1.5rem;
   will-change: filter;
   transition: filter 300ms;
   border-radius: 100%;
+}
+
+.logo-auth:hover {
+  filter: drop-shadow(0 0 3rem white);
 }
 
 .logo-tableau:hover {
@@ -57,3 +92,4 @@
 .horde:hover {
   filter: drop-shadow(0 0 3rem red);
 }
+

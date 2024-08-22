@@ -19,13 +19,14 @@ interface ItemNames {
   achats: string;
   token: string;
   itemsList: string;
-  visitor: string;  // Ajout du visiteur
+  visitor: string; 
 }
 
 const Home: React.FC = () => {
   const [characterImages, setCharacterImages] = useState<CharacterImageMap>({});
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isAuthenticated = Boolean(localStorage.getItem("token")); // Vérifie si l'utilisateur est connecté
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
   const navigate = useNavigate();
 
@@ -35,14 +36,16 @@ const Home: React.FC = () => {
     achats: "inv_misc_bag_07",
     token: "wow_token01",
     itemsList: "inv_inscription_runescrolloffortitude_yellow",
-    visitor: "inv_misc_questionmark",  // Icône pour le visiteur
+    visitor: "inv_misc_questionmark",
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/auth");
   };
 
   useEffect(() => {
-    const fetchCharacterImage = async (
-      realm: string,
-      characterName: string
-    ) => {
+    const fetchCharacterImage = async (realm: string, characterName: string) => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`
@@ -85,69 +88,119 @@ const Home: React.FC = () => {
 
   return (
     <div>
+            <button className="logout-button" onClick={handleLogout}>
+        Déconnexion
+      </button>
       {isLoading ? (
         <img src={loader} alt="Loading..." className="loader" />
       ) : (
         <div>
           <h1 className="title">World of WarCraft</h1>
-          <section className="carousel">
-            <div className="non-character-icons">
-              <Link to="/upload">
-                <img
-                  src={`${baseIconUrl}/${itemNames.upload}.jpg`}
-                  className="logo logo-upload"
-                  alt="Upload"
-                />
-              </Link>
-              <Link to="/tableau">
-                <img
-                  src={`${baseIconUrl}/${itemNames.tableau}.jpg`}
-                  className="logo logo-tableau"
-                  alt="Tableau"
-                />
-              </Link>
-              <Link to="/achats">
-                <img
-                  src={`${baseIconUrl}/${itemNames.achats}.jpg`}
-                  className="logo logo-achats"
-                  alt="Achats"
-                />
-              </Link>
-              <Link to="/token">
-                <img
-                  src={`${baseIconUrl}/${itemNames.token}.jpg`}
-                  className="logo logo-token"
-                  alt="Token"
-                />
-              </Link>
-              <Link to="/items-status">
-                <img
-                  src={`${baseIconUrl}/${itemNames.itemsList}.jpg`}
-                  className="logo logo-itemsList"
-                  alt="Items Status"
-                />
-              </Link>
-              <img
-                src={`${baseIconUrl}/${itemNames.visitor}.jpg`}
-                className="logo logo-visitor"
-                alt="Visiteur"
-                onClick={() => navigate("/auth")}  // Redirection vers la page d'authentification
-              />
-            </div>
-            <div className="character-icons">
-              {Object.entries(characterImages).map(([name, imageUrl]) => {
-                const character = characters.find((char) => char.name === name);
-                return (
-                  <Link key={name} to={`/${character?.realm}/${name}`}>
+          <section className={`carousel ${!isAuthenticated ? "centered" : ""}`}>
+            {!isAuthenticated ? (
+              <>
+                <div className="non-character-icons">
+                <Link  to="/auth">
+                  <img
+                    src={`${baseIconUrl}/${itemNames.visitor}.jpg`}
+                    className="logo logo-auth"
+                    alt="s'authentifier"
+                  />
+                </Link>
+                </div>
+                <div className="non-character-icons small-links">
+                  <Link to="/upload">
                     <img
-                      src={imageUrl ?? ""}
-                      className={`logo logo-character ${character?.faction}`}
-                      alt={`${name} character`}
+                      src={`${baseIconUrl}/${itemNames.upload}.jpg`}
+                      className="logo logo-upload"
+                      alt="Upload"
                     />
                   </Link>
-                );
-              })}
-            </div>
+                  <Link to="/tableau">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.tableau}.jpg`}
+                      className="logo logo-tableau"
+                      alt="Tableau"
+                    />
+                  </Link>
+                  <Link to="/achats">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.achats}.jpg`}
+                      className="logo logo-achats"
+                      alt="Achats"
+                    />
+                  </Link>
+                  <Link to="/token">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.token}.jpg`}
+                      className="logo logo-token"
+                      alt="Token"
+                    />
+                  </Link>
+                  <Link to="/items-status">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.itemsList}.jpg`}
+                      className="logo logo-itemsList"
+                      alt="Items Status"
+                    />
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="non-character-icons">
+                  <Link to="/upload">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.upload}.jpg`}
+                      className="logo logo-upload"
+                      alt="Upload"
+                    />
+                  </Link>
+                  <Link to="/tableau">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.tableau}.jpg`}
+                      className="logo logo-tableau"
+                      alt="Tableau"
+                    />
+                  </Link>
+                  <Link to="/achats">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.achats}.jpg`}
+                      className="logo logo-achats"
+                      alt="Achats"
+                    />
+                  </Link>
+                  <Link to="/token">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.token}.jpg`}
+                      className="logo logo-token"
+                      alt="Token"
+                    />
+                  </Link>
+                  <Link to="/items-status">
+                    <img
+                      src={`${baseIconUrl}/${itemNames.itemsList}.jpg`}
+                      className="logo logo-itemsList"
+                      alt="Items Status"
+                    />
+                  </Link>
+                </div>
+                <div className="character-icons">
+                  {Object.entries(characterImages).map(([name, imageUrl]) => {
+                    const character = characters.find((char) => char.name === name);
+                    return (
+                      <Link key={name} to={`/${character?.realm}/${name}`}>
+                        <img
+                          src={imageUrl ?? ""}
+                          className={`logo logo-character ${character?.faction}`}
+                          alt={`${name} character`}
+                        />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </section>
         </div>
       )}
