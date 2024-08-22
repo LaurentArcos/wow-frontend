@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/auth");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -88,9 +88,6 @@ const Home: React.FC = () => {
 
   return (
     <div>
-            <button className="logout-button" onClick={handleLogout}>
-        Déconnexion
-      </button>
       {isLoading ? (
         <img src={loader} alt="Loading..." className="loader" />
       ) : (
@@ -148,6 +145,9 @@ const Home: React.FC = () => {
               </>
             ) : (
               <>
+                <button className="logout-button" onClick={handleLogout}>
+                  Déconnexion
+                </button>
                 <div className="non-character-icons">
                   <Link to="/upload">
                     <img
