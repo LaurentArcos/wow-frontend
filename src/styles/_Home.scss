@@ -54,12 +54,14 @@ logout-button {
 }
 
 .logo {
-  height: 10rem;
+  height: 8rem;
   padding: 1.5rem;
   will-change: filter;
   transition: filter 300ms;
   border-radius: 100%;
 }
+
+
 
 .logo-auth:hover {
   filter: drop-shadow(0 0 3rem white);

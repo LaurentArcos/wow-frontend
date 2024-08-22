@@ -44,6 +44,10 @@ const Home: React.FC = () => {
     navigate("/");
   };
 
+  const handleGrayedLinkClick = () => {
+    alert("Veuillez vous identifier pour accéder à toutes les fonctionnalités.");
+  };
+
   useEffect(() => {
     const fetchCharacterImage = async (realm: string, characterName: string) => {
       try {
@@ -106,41 +110,41 @@ const Home: React.FC = () => {
                 </Link>
                 </div>
                 <div className="non-character-icons small-links">
-                  <Link to="/upload">
+                  <div onClick={handleGrayedLinkClick}>
                     <img
                       src={`${baseIconUrl}/${itemNames.upload}.jpg`}
                       className="logo logo-upload"
                       alt="Upload"
                     />
-                  </Link>
-                  <Link to="/tableau">
+                  </div>
+                  <div onClick={handleGrayedLinkClick}>
                     <img
                       src={`${baseIconUrl}/${itemNames.tableau}.jpg`}
                       className="logo logo-tableau"
                       alt="Tableau"
                     />
-                  </Link>
-                  <Link to="/achats">
+                  </div>
+                  <div onClick={handleGrayedLinkClick}>
                     <img
                       src={`${baseIconUrl}/${itemNames.achats}.jpg`}
                       className="logo logo-achats"
                       alt="Achats"
                     />
-                  </Link>
-                  <Link to="/token">
+                  </div>
+                  <div onClick={handleGrayedLinkClick}>
                     <img
                       src={`${baseIconUrl}/${itemNames.token}.jpg`}
                       className="logo logo-token"
                       alt="Token"
                     />
-                  </Link>
-                  <Link to="/items-status">
+                  </div>
+                  <div onClick={handleGrayedLinkClick}>
                     <img
                       src={`${baseIconUrl}/${itemNames.itemsList}.jpg`}
                       className="logo logo-itemsList"
                       alt="Items Status"
                     />
-                  </Link>
+                  </div>
                 </div>
               </>
             ) : (
