@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import loader from "../assets/warcraft.png";
 
-// Define types for character images and item names
 interface CharacterImageMap {
   [key: string]: string | null;
 }
@@ -20,6 +19,7 @@ interface ItemNames {
   achats: string;
   token: string;
   itemsList: string;
+  visitor: string;  // Ajout du visiteur
 }
 
 const Home: React.FC = () => {
@@ -27,6 +27,7 @@ const Home: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
+  const navigate = useNavigate();
 
   const itemNames: ItemNames = {
     upload: "inv_ammo_arrow_02",
@@ -34,6 +35,7 @@ const Home: React.FC = () => {
     achats: "inv_misc_bag_07",
     token: "wow_token01",
     itemsList: "inv_inscription_runescrolloffortitude_yellow",
+    visitor: "inv_misc_questionmark",  // Icône pour le visiteur
   };
 
   useEffect(() => {
@@ -43,9 +45,7 @@ const Home: React.FC = () => {
     ) => {
       try {
         const response = await axios.get(
-          `${
-            import.meta.env.VITE_API_URL
-          }/character/media/${realm}/${characterName}`
+          `${import.meta.env.VITE_API_URL}/character/media/${realm}/${characterName}`
         );
         return response.data.assets[0].value;
       } catch (error) {
@@ -127,6 +127,12 @@ const Home: React.FC = () => {
                   alt="Items Status"
                 />
               </Link>
+              <img
+                src={`${baseIconUrl}/${itemNames.visitor}.jpg`}
+                className="logo logo-visitor"
+                alt="Visiteur"
+                onClick={() => navigate("/auth")}  // Redirection vers la page d'authentification
+              />
             </div>
             <div className="character-icons">
               {Object.entries(characterImages).map(([name, imageUrl]) => {

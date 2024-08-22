@@ -7,6 +7,7 @@ import Home from "./Home";
 import Token from "./Token";
 import Layout from "./Layout";
 import ItemStatus from "./ItemStatus";
+import AuthPage from "./AuthPage";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route
             path="/upload"
             element={
