@@ -1,20 +1,21 @@
 @use 'variables';
 
-logout-button {
+.logout-container {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: variables.$color-primary;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
 
-  &:hover {
-    background-color: darken(variables.$color-primary, 10%);
+  .logo-logout {
+    height: 4rem;
+    padding: 0.5rem;
+    will-change: filter;
+    transition: filter 300ms;
+    border-radius: 100%;
+    cursor: pointer;
+
+    &:hover {
+      filter: drop-shadow(0 0 3rem #ff0000); 
+    }
   }
 }
 
@@ -25,6 +26,14 @@ logout-button {
   text-align: center;
   margin: auto;
 }
+
+.welcome-message {
+  font-family: Arial, sans-serif;
+  color: variables.$color-primary;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 
 .carousel {
   display: flex;
@@ -54,7 +63,7 @@ logout-button {
 }
 
 .logo {
-  height: 8rem;
+  height: 9rem;
   padding: 1.5rem;
   will-change: filter;
   transition: filter 300ms;

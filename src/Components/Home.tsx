@@ -19,7 +19,8 @@ interface ItemNames {
   achats: string;
   token: string;
   itemsList: string;
-  visitor: string; 
+  visitor: string;
+  logout: string; 
 }
 
 const Home: React.FC = () => {
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isAuthenticated = Boolean(localStorage.getItem("token")); // Vérifie si l'utilisateur est connecté
   const baseIconUrl = "https://render.worldofwarcraft.com/eu/icons/56";
+  const username = localStorage.getItem("username") || "";
   const navigate = useNavigate();
 
   const itemNames: ItemNames = {
@@ -37,6 +39,7 @@ const Home: React.FC = () => {
     token: "wow_token01",
     itemsList: "inv_inscription_runescrolloffortitude_yellow",
     visitor: "inv_misc_questionmark",
+    logout: "inv_pant_mail_raidshaman_q_01",
   };
 
   const handleLogout = () => {
@@ -97,6 +100,11 @@ const Home: React.FC = () => {
       ) : (
         <div>
           <h1 className="title">World of WarCraft</h1>
+          {isAuthenticated && (
+            <h2 className="welcome-message">
+              Bienvenue, {username} !
+            </h2>
+          )}
           <section className={`carousel ${!isAuthenticated ? "centered" : ""}`}>
             {!isAuthenticated ? (
               <>
@@ -149,9 +157,14 @@ const Home: React.FC = () => {
               </>
             ) : (
               <>
-                <button className="logout-button" onClick={handleLogout}>
-                  Déconnexion
-                </button>
+                <div className="logout-container">
+                  <img
+                    src={`${baseIconUrl}/${itemNames.logout}.jpg`}
+                    className="logo logo-logout"
+                    alt="Déconnexion"
+                    onClick={handleLogout}
+                  />
+                </div>
                 <div className="non-character-icons">
                   <Link to="/upload">
                     <img

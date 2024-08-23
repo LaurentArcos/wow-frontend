@@ -54,6 +54,7 @@ const AuthPage: React.FC = () => {
           { username, password }
         );
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("username", username);
         navigate("/"); // Redirection vers la page d'accueil
       } catch (error) {
         console.error("Erreur d'authentification :", error);
