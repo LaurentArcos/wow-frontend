@@ -1,5 +1,23 @@
 @use 'variables';
 
+.back-to-home {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.back-link {
+  color: variables.$color-primary;
+  cursor: pointer;
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+.back-link:hover {
+  text-decoration: none;
+  color: white;
+}
+
 .auth-container {
   display: flex;
   justify-content: center;
@@ -16,7 +34,7 @@
 }
 
 .auth-form h2 {
-  color: #ffd700;
+  color: variables.$color-primary;
   margin-bottom: 1.5rem;
 }
 
@@ -57,6 +75,25 @@
   z-index: 10;
 }
 
+.username-container {
+  position: relative;
+}
+
+.username-hint {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
 .auth-form button {
   width: 100%;
   padding: 0.8rem;
@@ -74,5 +111,10 @@
 }
 
 .auth-form p:hover {
+  text-transform: 1.2;
+}
+
+.highlight {
   text-decoration: underline;
+  cursor: pointer;
 }

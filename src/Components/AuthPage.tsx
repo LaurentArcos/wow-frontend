@@ -5,12 +5,20 @@ import invisibleIcon from "../assets/invisible - gold.png";
 import visibleIcon from "../assets/visible - gold.png";
 
 const AuthPage: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // Toggle entre connexion et inscription
-  const [showPasswordHint, setShowPasswordHint] = useState(false); // Pour afficher la bulle d'info
+  const [isLogin, setIsLogin] = useState(true); 
+  const [showPasswordHint, setShowPasswordHint] = useState(false); 
+  const [showUsernameHint, setShowUsernameHint] = useState(false);
   const navigate = useNavigate();
+
+  const validateUsername = (username: string) => {
+    const errors = [];
+    if (username.length < 4) errors.push("L'identifiant doit contenir au moins 4 caractères.");
+    if (!/[A-Z]/.test(username)) errors.push("L'identifiant doit contenir au moins une majuscule.");
+    return errors.length > 0 ? errors.join(" ") : null;
+  };
 
   const validatePassword = (password: string) => {
     const errors = [];
@@ -24,39 +32,82 @@ const AuthPage: React.FC = () => {
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Valider le mot de passe uniquement lors de la soumission
-    const error = validatePassword(password);
-    if (error) {
-      alert(error); // Affiche les erreurs en alerte
+    // Valider l'identifiant
+    const usernameError = validateUsername(username);
+    if (usernameError) {
+      alert(usernameError); // Affiche les erreurs pour l'identifiant
       return;
     }
 
-    const url = isLogin ? "/login" : "/register";
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}${url}`,
-        { email, password }
-      );
-      localStorage.setItem("token", response.data.token);
-      navigate("/"); // Redirection vers la page d'accueil
-    } catch (error) {
-      console.error("Erreur d'authentification :", error);
-      alert("Erreur lors de l'authentification. Veuillez réessayer.");
+    // Valider le mot de passe
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      alert(passwordError); // Affiche les erreurs pour le mot de passe
+      return;
+    }
+
+    if (isLogin) {
+      // Connexion
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/login`,
+          { username, password }
+        );
+        localStorage.setItem("token", response.data.token);
+        navigate("/"); // Redirection vers la page d'accueil
+      } catch (error) {
+        console.error("Erreur d'authentification :", error);
+        alert("Erreur lors de l'authentification. Veuillez réessayer.");
+      }
+    } else {
+      // Inscription désactivée
+      alert("La création de compte est désactivée pour le moment.");
+      // Logique d'inscription commentée pour une utilisation future
+      /*
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/register`,
+          { username, password }
+        );
+        localStorage.setItem("token", response.data.token);
+        navigate("/"); // Redirection vers la page d'accueil
+      } catch (error) {
+        console.error("Erreur d'inscription :", error);
+        alert("Erreur lors de l'inscription. Veuillez réessayer.");
+      }
+      */
     }
   };
 
   return (
     <div className="auth-container">
+
+      {/* Lien vers la page d'accueil */}
+      <div className="back-to-home">
+        <p onClick={() => navigate("/")} className="back-link">
+          Retour à l'accueil
+        </p>
+      </div>
+
       <div className="auth-form">
         <h2>{isLogin ? "Connexion" : "Creer un compte"}</h2>
         <form onSubmit={handleAuth}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="username-container">
+            <input
+              type="text"
+              placeholder="Identifiant"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              onFocus={() => setShowUsernameHint(true)} // Affiche la bulle d'info de l'identifiant
+              onBlur={() => setShowUsernameHint(false)} // Cache la bulle d'info de l'identifiant
+            />
+            {showUsernameHint && (
+              <div className="password-hint">
+                L'identifiant doit contenir au moins 4 caractères, dont une majuscule.
+              </div>
+            )}
+          </div>
           <div className="password-container">
             <input
               type={passwordVisible ? "text" : "password"}
@@ -64,8 +115,8 @@ const AuthPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              onFocus={() => setShowPasswordHint(true)} // Affiche la bulle d'info
-              onBlur={() => setShowPasswordHint(false)} // Cache la bulle d'info
+              onFocus={() => setShowPasswordHint(true)} // Affiche la bulle d'info du mot de passe
+              onBlur={() => setShowPasswordHint(false)} // Cache la bulle d'info du mot de passe
             />
             <img
               src={passwordVisible ? visibleIcon : invisibleIcon}
@@ -84,9 +135,17 @@ const AuthPage: React.FC = () => {
           </button>
         </form>
         <p onClick={() => setIsLogin(!isLogin)}>
-          {isLogin
-            ? "Vous n'avez pas de compte ? Créer un compte"
-            : "Vous avez déjà un compte ? Connectez-vous"}
+          {isLogin ? (
+            <>
+              Vous n'avez pas de compte ?{" "}
+              <span className="highlight">Créer un compte</span>
+            </>
+          ) : (
+            <>
+              Vous avez déjà un compte ?{" "}
+              <span className="highlight">Connectez-vous</span>
+            </>
+          )}
         </p>
       </div>
     </div>
