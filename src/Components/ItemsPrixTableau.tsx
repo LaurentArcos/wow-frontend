@@ -5,6 +5,7 @@ interface Item {
   Id_Item: number;
   nom: string;
   image: string;
+  active: number;
 }
 
 interface Prix {
@@ -143,11 +144,13 @@ const ItemsPrixTableau: React.FC = () => {
     try {
       const resItems = await axios.get(`${import.meta.env.VITE_API_URL}/items`);
       const resPrix = await axios.get(`${import.meta.env.VITE_API_URL}/prix`);
-      const resAchats = await axios.get(
-        `${import.meta.env.VITE_API_URL}/achats`
-      );
+      const resAchats = await axios.get(`${import.meta.env.VITE_API_URL}/achats`);
+  
+      // Filtrer les items pour ne garder que ceux qui ont Active = 1
+      const activeItems = resItems.data.filter((item: Item) => item.active === 1);
+  
       setOrganizedData(
-        organizeDataForTable(resItems.data, resPrix.data, resAchats.data)
+        organizeDataForTable(activeItems, resPrix.data, resAchats.data)
       );
     } catch (error) {
       console.error("Erreur lors de la récupération des données", error);
