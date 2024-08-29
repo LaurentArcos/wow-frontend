@@ -7,6 +7,7 @@ interface Item {
   Id_Item: number;
   nom: string;
   active: boolean;
+  extension: string;
   modified?: boolean;
 }
 
@@ -18,6 +19,7 @@ const ItemStatus: React.FC = () => {
   const [modifications, setModifications] = useState<
     { nom: string; active: boolean }[]
   >([]);
+  const [selectedExtension, setSelectedExtension] = useState<string>("");
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -80,28 +82,50 @@ const ItemStatus: React.FC = () => {
     }
   };
 
+  const handleExtensionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedExtension(e.target.value);
+  };
+
   return (
     <div className="items-status-page">
       <h2>Items Status Management</h2>
+      <div className="extension-select">
+        <label htmlFor="extension">Sélectionnez une extension:</label>
+        <select
+          id="extension"
+          value={selectedExtension}
+          onChange={handleExtensionChange}
+        >
+          <option value="">Toutes les extensions</option>
+          <option value="Dragonflight">Dragonflight</option>
+          <option value="The War Within">The War Within</option>
+        </select>
+      </div>
       <section className="items-status-grid">
-        {items.map((item) => (
-          <div
-            key={item.Id_Item}
-            className={`items-status-item ${
-              item.modified ? "modified" : item.active ? "active" : "inactive"
-            }`}
-          >
-            <span>{item.nom}</span>
-            <input
-              type="checkbox"
-              className="items-status-checkbox"
-              checked={item.active}
-              onChange={(e) =>
-                handleCheckboxChange(item.Id_Item, e.target.checked, item.nom)
-              }
-            />
-          </div>
-        ))}
+        {items
+          .filter((item) =>
+            selectedExtension
+              ? item.extension === selectedExtension
+              : true
+          )
+          .map((item) => (
+            <div
+              key={item.Id_Item}
+              className={`items-status-item ${
+                item.modified ? "modified" : item.active ? "active" : "inactive"
+              }`}
+            >
+              <span>{item.nom}</span>
+              <input
+                type="checkbox"
+                className="items-status-checkbox"
+                checked={item.active}
+                onChange={(e) =>
+                  handleCheckboxChange(item.Id_Item, e.target.checked, item.nom)
+                }
+              />
+            </div>
+          ))}
       </section>
       <button className="items-status-button" onClick={handleSubmit}>
         Valider

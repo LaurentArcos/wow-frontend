@@ -1,13 +1,32 @@
 @use 'variables';
 
 .items-status-page {
-  padding: 20px;
+  padding: 50px;
   background-color: #1d1d1d;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 100px auto;
-  max-width: 100%px;
+  margin: 150px auto;
+  max-width: 80%;
 
+  .extension-select {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+      color: #ecf0f1;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      background-color: #333;
+      color: #ecf0f1;
+      border: 1px solid #555;
+    }
+  }
 
   .items-status-grid {
     display: grid;
@@ -47,7 +66,7 @@
   .items-status-button {
     display: block;
     width: 200px;
-    margin: 20px auto;
+    margin: 50px auto;
     padding: 10px;
     font-size: 16px;
     color: #fff;
