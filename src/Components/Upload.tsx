@@ -14,7 +14,12 @@ const Upload: React.FC = () => {
   const [isTransferEnabled, setIsTransferEnabled] = useState<boolean>(false);
   const [newItemName, setNewItemName] = useState<string>("");
   const [newItemImagePart, setNewItemImagePart] = useState<string>("");
-  const [showNewItemSection, setShowNewItemSection] = useState<boolean>(true);
+  const [newItemExtension, setNewItemExtension] = useState<string>("");
+  const [newItemType, setNewItemType] = useState<string>("");
+  const [showNewItemSection, setShowNewItemSection] = useState<boolean>(false);
+  const [showUploadPricesSection, setShowUploadPricesSection] =
+    useState<boolean>(false);
+  const [pageTitle, setPageTitle] = useState<string>("Uploads");
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(e.target.value);
@@ -32,7 +37,6 @@ const Upload: React.FC = () => {
     });
     setFormattedData(formatted);
     setIsTransferEnabled(true);
-    setShowNewItemSection(false);
   };
 
   const transferData = async () => {
@@ -42,7 +46,6 @@ const Upload: React.FC = () => {
         formattedData
       );
       toast.success(`Upload réussi: ${formattedData.length} prix ajoutés.`);
-      setShowNewItemSection(true);
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -51,6 +54,11 @@ const Upload: React.FC = () => {
   };
 
   const handleAddNewItem = async () => {
+    if (!newItemExtension || !newItemType) {
+      toast.error("Veuillez sélectionner une extension et un type.");
+      return;
+    }
+
     try {
       const fullImageUrl = `https://render.worldofwarcraft.com/eu/icons/56/${newItemImagePart}.jpg`;
       const response = await axios.post(
@@ -58,12 +66,18 @@ const Upload: React.FC = () => {
         {
           nom: newItemName,
           image: fullImageUrl,
+          extension: newItemExtension,
+          type: newItemType,
         }
       );
 
-      toast.success(`Nouvel item "${newItemName}" ajouté avec succès !`);
+      toast.success(
+        `Nouvel item "${newItemName}" ajouté avec succès ! Extension: ${newItemExtension}, Type: ${newItemType}`
+      );
       setNewItemName("");
       setNewItemImagePart("");
+      setNewItemExtension("");
+      setNewItemType("");
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -77,9 +91,44 @@ const Upload: React.FC = () => {
     setFormattedData(newData);
   };
 
+  const handleShowNewItemSection = () => {
+    setPageTitle("Ajouter un item");
+    setShowNewItemSection(true);
+    setShowUploadPricesSection(false);
+  };
+
+  const handleShowUploadPricesSection = () => {
+    setPageTitle("Ajouter des prix");
+    setShowNewItemSection(false);
+    setShowUploadPricesSection(true);
+  };
+
+  const handleBackToChoices = () => {
+    setPageTitle("Uploads");
+    setShowNewItemSection(false);
+    setShowUploadPricesSection(false);
+  };
+
   return (
-    <div className="Upload">
-      <h2>Upload de Prix et Items</h2>
+    <div className="upload-container">
+      <h2 className="upload-title">{pageTitle}</h2>
+      {!showNewItemSection && !showUploadPricesSection && (
+        <div className="choice-container">
+          <button
+            className="choice-button"
+            onClick={handleShowNewItemSection}
+          >
+            Items
+          </button>
+          <button
+            className="choice-button"
+            onClick={handleShowUploadPricesSection}
+          >
+            Prix
+          </button>
+        </div>
+      )}
+
       {showNewItemSection && (
         <section className="upload-new-item">
           <div className="input-group">
@@ -95,35 +144,73 @@ const Upload: React.FC = () => {
               onChange={(e) => setNewItemImagePart(e.target.value)}
               placeholder="Partie de l'URL de l'image"
             />
+            <select
+              value={newItemExtension}
+              onChange={(e) => setNewItemExtension(e.target.value)}
+            >
+              <option value="" disabled>
+                Veuillez sélectionner une extension
+              </option>
+              <option value="Dragonflight">Dragonflight</option>
+              <option value="The War Within">The War Within</option>
+            </select>
+            <select
+              value={newItemType}
+              onChange={(e) => setNewItemType(e.target.value)}
+            >
+              <option value="" disabled>
+                Veuillez sélectionner un type
+              </option>
+              <option value="Minage">Minage</option>
+              <option value="Pêche">Pêche</option>
+              <option value="Herboristerie">Herboristerie</option>
+              <option value="Dépeçage">Dépeçage</option>
+              <option value="Cuisine">Cuisine</option>
+              <option value="Artisanat">Artisanat</option>
+            </select>
             <button onClick={handleAddNewItem}>Ajouter un nouvel item</button>
+            <button
+              className="back-button"
+              onClick={handleBackToChoices}
+            >
+              Retour
+            </button>
           </div>
         </section>
       )}
 
-      <section className="upload-prices">
-        <textarea
-          value={inputData}
-          onChange={handleInputChange}
-          placeholder="Import depuis Auctionator"
-        />
-        <div className="upload-prices-buttons">
-          <button onClick={formatData}>Formatter les données</button>
-          <button onClick={transferData} disabled={!isTransferEnabled}>
-            Transférer dans la base de données
+      {showUploadPricesSection && (
+        <section className="upload-prices">
+          <textarea
+            value={inputData}
+            onChange={handleInputChange}
+            placeholder="Import depuis Auctionator"
+          />
+          <div className="upload-prices-buttons">
+            <button onClick={formatData}>Formatter les données</button>
+            <button onClick={transferData} disabled={!isTransferEnabled}>
+              Transférer dans la base de données
+            </button>
+            {formattedData.map((item, index) => (
+              <div key={index}>
+                {item.name} : {item.price}
+                <button
+                  className="delete-button"
+                  onClick={() => deleteFormattedData(index)}
+                >
+                  Supprimer
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            className="back-button"
+            onClick={handleBackToChoices}
+          >
+            Retour
           </button>
-          {formattedData.map((item, index) => (
-            <div key={index}>
-              {item.name} : {item.price}
-              <button
-                className="delete-button"
-                onClick={() => deleteFormattedData(index)}
-              >
-                Supprimer
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
+        </section>
+      )}
 
       <ToastContainer theme="colored" />
     </div>
