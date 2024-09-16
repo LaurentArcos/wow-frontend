@@ -13,34 +13,14 @@
        },
      },
    ],
-   server: {
-     proxy: {
-       '/api': {
-         target: 'http:localhost:8080',
-         changeOrigin: true,
-         secure: false,
-         rewrite: (path) => path.replace(/^\/api/, '')
-       }
-     }
-   }
+  //  server: {
+  //    proxy: {
+  //      '/api': {
+  //        target: 'http:localhost:8080',
+  //        changeOrigin: true,
+  //        secure: false,
+  //        rewrite: (path) => path.replace(/^\/api/, '')
+  //      }
+  //    }
+  //  }
  });
-
-//* INVERSER LES COMMS selon dev ou live
-
-// import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
-
-// export default defineConfig({
-//   base: '/wow-helper/', // Définit le chemin de base
-//   plugins: [react()],
-//   server: {
-//     proxy: {
-//       '/api': {
-//         target: 'https://www.laurentarcos.fr', // Change cela pour correspondre à ta configuration
-//         changeOrigin: true,
-//         secure: true,
-//         rewrite: (path) => path.replace(/^\/api/, '') // Retire le préfixe '/api'
-//       }
-//     }
-//   }
-// });
