@@ -59,6 +59,7 @@ const IconBar: React.FC = () => {
         { realm: "uldaman", name: "thryndil" },
         { realm: "uldaman", name: "olbia" },
         { realm: "uldaman", name: "lukki" },
+        { realm: "uldaman", name: "schystor" },
         { realm: "uldaman", name: "sharubu" },
         { realm: "uldaman", name: "falak" },
         { realm: "uldaman", name: "hexza" },
